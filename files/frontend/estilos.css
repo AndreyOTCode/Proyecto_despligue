@@ -1,0 +1,337 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body{
+  background: #504c4c;
+}
+.navbar-personalizado{
+    padding: 0;
+    width: 100%;
+    margin:  0 ;
+    background-color: #817f7f;
+}
+.link{
+    text-align: center;
+    border-right: 1px solid #817f7f ;
+}
+.link:hover {
+    color: rgb(253, 248, 115);
+}
+/* -----------SECCION ELEGIR SERVICOS ------------------------------*/
+.seccion{
+    position: relative;
+    height: 100vh;
+    display: flex;
+    margin-top: 20px;
+    overflow:auto;
+  }
+  
+  .left-image{
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  
+  .left-image {
+    background-image: url('barber.jpg');
+  }
+  
+  .over-text {
+    position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+    text-align: center;
+  }
+  .over-text h1{
+    font-size: 2.5em;
+    margin: 5px;
+  }
+
+  /*                      SECCION DE RESERVA                         */
+  .contenido-reserva {
+    background-color: #111; /* Fondo oscuro */
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  
+  .contenido-texto h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .contenido-texto p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .botones .btn {
+    margin: 0 10px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .botones .btn:hover {
+    transform: scale(1.05);
+  }
+/*--------------------SECCION DE SERVICIOS------------------------------*/
+.seccion-servicios {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 20px;
+  flex-wrap: wrap; /* Para mantener responsive */
+}
+
+.servicio {
+  flex: 1 1 300px; /* Quepan mínimo de 300px antes de hacer wrap */
+  max-width: 500px;
+  transition: transform 0.3s ease;
+}
+
+.servicio:hover {
+  transform: scale(1.03);
+}
+
+.imagen-servicio {
+  position: relative;
+  width: 100%;
+  padding-top: 60%; /* Aspect ratio 16:9 */
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.imagen-servicio:hover .overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+
+  /*---------------------------FOOTER--------------------------*/
+.footer {
+  background-color: #111;
+  color: #d4af37;
+  padding: 40px 20px 10px;
+  font-family: 'Arial', sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  margin: 10px;
+}
+
+.footer-section h3 {
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.footer-social {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.footer-social a {
+  color: #d4af37;
+  font-size: 24px;
+  margin: 0 15px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 10px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  font-size: 14px;
+}
+
+  
+/*//////////////////////////////////////    BARBERIA.HTML     //////////////////////////////////////*/
+#sliderBarberia .carousel-item img {
+  width: 100%;
+  height: 600px; /* Ajusta esta altura según lo que desees */
+  object-fit: cover; /* Mantiene las proporciones de la imagen sin deformarla */
+}
+/* Control de altura de la tarjeta y sus elementos internos */
+.card {
+  height: 100%; /* se mantiene, ya lo tienes */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Imagen con altura fija y proporción adecuada */
+.card-img-top {
+  height: 300px; /* Puedes ajustar la altura según lo que necesites */
+  object-fit: cover; /* Esto recorta la imagen para que se mantenga proporcional sin deformarse */
+}
+
+/* El cuerpo de la tarjeta crece igual para todas */
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espacia título, texto y botón */
+}
+
+/*//////////////////////////////////////    login.HTML     //////////////////////////////////////*/
+
+
+  .login-container {
+            color: #f4eaea;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #8a8787;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+  .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ececec;
+        }
+
+/*//////////////////////////////////////    registro.HTML     //////////////////////////////////////*/
+
+ .registration-container {
+           color: #f4eaea;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #8a8787;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .registration-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ececec;
+        }
+
+  /*-------------------------media query------------------------*/
+  @media (max-width: 700px) {
+  /* Ajustes para la sección principal */
+  .seccion {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-image {
+    height: 300px;
+  }
+
+  .over-text {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .over-text h1 {
+    font-size: 1.5em;
+  }
+
+  /* Ajustes para botones en reserva */
+  .botones .btn {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+  }
+
+  /* Sección servicios en columna */
+  .seccion-servicios {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .servicio {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+  .imagen-servicio {
+    height: 100%;
+  }
+
+  /* Footer en columna */
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-social a {
+    margin: 0 10px;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+  }
+
+  /* Navbar colapsado centrado */
+  .navbar-nav .nav-link {
+    text-align: center;
+    border: none;
+    padding: 10px 0;
+  }
+
+
+/*//////////////////////////////////////    BARBERIA.HTML     //////////////////////////////////////*/
+@media (max-width: 700px) {
+  #sliderBarberia .carousel-item img {
+    height: 250px; /* Ajusta la altura para pantallas más pequeñas */
+  }
+}
+
+ 
