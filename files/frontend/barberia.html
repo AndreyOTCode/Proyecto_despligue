@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Servicios Barbería</title>
-  <link rel="icon" href="icono.png" type="image/png">
+  <link rel="icon" href="img/icono.png" type="image/png">
   <link rel="stylesheet" href="estilos.css"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
 <body style="padding-top: 80px;"> 
 
   <!-- Navbar -->
     <div id="navbar-container"></div>
 
   <!--................................Primer Contenedor.............................-->
-  <section class="contenedorPrincipal">
+    <section class="contenedorPrincipal">
     <!-- Título -->
-  <div class="container text-center my-4">
-    <h1>Servicios de Barbería</h1>
-  </div>
+       <div class="container text-center my-4">
+           <h1>Servicios de Barbería</h1>
+      </div>
 
   <!-- Slider o Imagen -->
   <div class="container mb-4">
-  <div id="sliderBarberia" class="carousel slide" data-bs-ride="carousel">
+    <div id="sliderBarberia" class="carousel slide" data-bs-ride="carousel">
     
-    <!-- Indicadores -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="3" aria-label="Slide 4"></button>
-    </div>
+      <!-- Indicadores -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#sliderBarberia" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      </div>
 
     <!-- Imágenes del Slider -->
     <div class="carousel-inner">
@@ -58,17 +60,13 @@
   </div>
 </div>
 
-  </section>
-  
+    </section>
 
-  <!-- Servicios -->
   <!-- Servicios -->
 <div class="container">
   <div class="row g-4">
 
-    
-
-    <!-- Corte Sencillo -->
+   <!-- Corte Sencillo -->
     <div class="col-md-4">
       <div class="card h-100 text-center">
         <img src="imagenes_barberia_slider/corte_sencillo.jpg" class="card-img-top" alt="Corte Sencillo" />
@@ -76,7 +74,7 @@
           <h5 class="card-title">Corte Sencillo</h5>
           <p class="card-text">Corte rápido y limpio para todos los estilos.</p>
           <p class="card-text"><strong>$20.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -88,7 +86,7 @@
           <h5 class="card-title">Corte Premium</h5>
           <p class="card-text">Corte con estilo y detalle personalizado.</p>
           <p class="card-text"><strong>$30.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -101,7 +99,7 @@
           <h5 class="card-title">Arreglo de Barba</h5>
           <p class="card-text">Perfilado y arreglo de barba con detalles precisos.</p>
           <p class="card-text"><strong>$10.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -114,7 +112,7 @@
           <h5 class="card-title">Perfilación de Cejas</h5>
           <p class="card-text">Diseño y depilado de cejas.</p>
           <p class="card-text"><strong>$10.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -127,7 +125,7 @@
           <h5 class="card-title">Mascarilla Facial</h5>
           <p class="card-text">Tratamiento facial revitalizante.</p>
           <p class="card-text"><strong>$15.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -140,7 +138,7 @@
           <h5 class="card-title">Servicio Completo</h5>
           <p class="card-text">Incluye corte, arreglo de barba y perfilación de cejas.</p>
           <p class="card-text"><strong>$50.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -149,19 +147,12 @@
 </div>
 
 
-      <!-- ... -->
-
-    </div>
-  </div>
-
+      
   <!--.............................. Scripts NAVBAR................................-->
-  <script>
-    fetch('navbar.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('navbar-container').innerHTML = data;
-      });
-  </script>
+  <!--.............................. Scripts NAVBAR................................-->
+<script src="scripts/navbar.js"></script>
+
+
 <!--....................................Scripts bootstrap..................................-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

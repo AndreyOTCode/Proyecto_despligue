@@ -19,43 +19,35 @@ body{
 .link:hover {
     color: rgb(253, 248, 115);
 }
+ 
 /* -----------SECCION ELEGIR SERVICOS ------------------------------*/
-.seccion{
-    position: relative;
-    height: 100vh;
-    display: flex;
-    margin-top: 20px;
-    overflow:auto;
-  }
-  
-  .left-image{
-    flex: 1;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
-  
-  .left-image {
-    background-image: url('barber.jpg');
-  }
-  
-  .over-text {
-    position: absolute;
-    width: 80%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 10;
-    text-align: center;
-  }
-  .over-text h1{
-    font-size: 2.5em;
-    margin: 5px;
-  }
+
+
+  .parallax-section {
+      position: relative;
+      height: 100vh;
+      background-image: url('img/barber.jpg');
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .overlay-text {
+      font-size: 3rem;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .content-section {
+      padding: 100px 15px;
+      background-color: #f8f9fa;
+    }
 
   /*                      SECCION DE RESERVA                         */
   .contenido-reserva {
@@ -253,6 +245,82 @@ body{
             color: #ececec;
         }
 
+ /*//////////////////////////////////////    reservas.HTML     //////////////////////////////////////*/
+
+.step-box {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: auto;
+      
+    }
+.step-box2{
+  width: 90%;
+  margin: auto;
+  padding: 10px;
+}
+.accordion-body{
+  color: #fff;
+  background: #959393;
+}
+
+/* ///////////////////PRODUCTOS.HTML ///////////////////////// */
+.select-estilizado {
+  width: 100%;
+  max-width: 100%;
+  background-color: #111;
+  color: rgb(234, 236, 229);
+  border: 2px solid rgb(247, 245, 236);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 10px rgba(252, 252, 252, 0.3);
+  font-weight: bold;
+  font-size: 1rem;
+  appearance: none; /* Quita estilos nativos */
+  -webkit-appearance: none; /* Safari */
+  -moz-appearance: none; /* Firefox */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.select-estilizado option {
+  background-color: #111;
+  color: rgb(255, 255, 255);
+  white-space: normal;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.carro{
+  margin: 0;
+}
+.boton_carro{
+  margin-top: -40px;
+  position: fixed;
+   z-index: 9999; 
+}
+.car{
+  background: #000;
+}
+.text-white{
+  z-index: 99999; 
+}
+
+/* ///////////////////admin.HTML ///////////////////////// */
+
+.tituloAdmiin{
+  margin: 100px 0 0;
+}
+.adminContenedor div{
+  max-width: 600px;
+  margin: auto;
+}
+.zonaAdministrativa{
+  padding: 30px;
+}
+  
+
   /*-------------------------media query------------------------*/
   @media (max-width: 700px) {
   /* Ajustes para la sección principal */
@@ -262,8 +330,8 @@ body{
   }
 
   .left-image {
-    height: 300px;
-  }
+    height: 300px !important;
+   }
 
   .over-text {
     position: static;
@@ -325,6 +393,12 @@ body{
     border: none;
     padding: 10px 0;
   }
+
+  /* ///////////////////////resrvas.html//////////////////////////////////////// */
+.step-box{
+  width: 100%;
+}
+
 
 
 /*//////////////////////////////////////    BARBERIA.HTML     //////////////////////////////////////*/

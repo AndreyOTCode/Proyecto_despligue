@@ -1,0 +1,19 @@
+/ragnarok-project
+  ├── /backend
+  │   ├── server.js
+  │   ├── db.js
+  │   ├── .env
+  │   ├── /middleware
+  │   │   └── authMiddleware.js
+  │   └── /routes
+  │       ├── auth.js
+  │       └── admin.js
+  └── /frontend
+      ├── index.html
+      ├── login.html
+      ├── admin.html
+      ├── navbar.html
+      ├── /css
+      │   └── estilos.css
+      └── /js
+          └── auth.js

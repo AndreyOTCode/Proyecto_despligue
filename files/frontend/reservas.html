@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ragnarok-Resevars</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="img/icono.png" type="image/png">
+    <link rel="stylesheet" href="estilos.css"/>
+
+</head>
+<body style="padding-top: 80px;">
+    <!-- Navbar -->
+    <div id="navbar-container"></div> 
+
+    <section class="contenedorPrincipal">
+        <!-- Título -->
+            <div class="container text-center my-4">
+                <h1>RESERVAS:</h1>
+            </div>
+
+   <!-- -----------------opcion 1:  ----------------------------->
+   <div class="step-box">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+           <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                 FECHA Y HORA: 
+              </button>
+           </h2>
+
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+               <div class="step-box2">
+                  <h4>Paso 1: Selecciona fecha y hora</h4>
+                     <div class="row g-3 mt-2">
+                        <div class="col-md-6">
+                          <label for="fecha" class="form-label">Fecha</label>
+                          <input type="date" id="fecha" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                           <label for="hora" class="form-label">Hora</label>
+                           <input type="time" id="hora" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="opciones" class="form-label">Elige un servicio: </label>
+                            <select name="opciones" id="opciones" class="form-select">
+                               <option selected>Seleccionar: </option>
+                               <option value="barberia" class="form-control">BARBERIA</option>
+                               <option value="tatuajes">TATUAJES</option>
+                            </select>
+                        </div>
+                     </div>
+               </div>
+             </div>
+           </div>
+  </div>
+  
+ <!-- ----------------------- opcion 2 --------------------------->
+  <div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+      data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+      PROFESIONAL:
+    </button>
+  </h2>
+  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+      <h4>Paso 2: Selecciona Profesional</h4>
+
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
+
+
+<!-- .........................BARBEROS........................................................ -->
+          <!-- BARBERO 1 -->
+        <div class="col d-flex profesional barberia">
+           <label for="barbero1" class="w-100">
+            <div class="card h-100 w-100 position-relative">
+              <div class="form-check position-absolute top-0 end-0 m-2">
+                <input class="form-check-input" type="radio" value="Barbero 1" id="barbero1" name="profesional">
+              </div>
+              <img src="img/barberia.jpg" class="card-img-top img-fluid" alt="Barbero 1">
+              <div class="card-body text-center">
+                <h5 class="card-title">Barbero 1</h5>
+                <p class="card-text">Especialista en cortes modernos y degradados.</p>
+              </div>
+            </div>
+          </label>
+        </div>
+
+
+          <!-- BARBERO 2 -->
+        <div class="col d-flex profesional barberia">
+          <label for="barbero2" class="w-100">
+            <div class="card h-100 w-100 position-relative">
+              <div class="form-check position-absolute top-0 end-0 m-2">
+                <input class="form-check-input" type="radio" value="Barbero 2" id="barbero2" name="profesional">
+              </div>
+              <img src="barbero2.jpg" class="card-img-top img-fluid" alt="Barbero 2">
+              <div class="card-body text-center">
+                <h5 class="card-title">Barbero 2</h5>
+                <p class="card-text">Especialista en barba y estilo clásico.</p>
+              </div>
+            </div>
+          </label>
+        </div>
+
+          <!-- BARBERO 3 -->
+        <div class="col d-flex profesional barberia">
+          <label for="barbero3" class="w-100">
+            <div class="card h-100 w-100 position-relative">
+              <div class="form-check position-absolute top-0 end-0 m-2">
+                <input class="form-check-input" type="radio" value="Barbero 3" id="barbero3" name="profesional">
+              </div>
+              <img src="barbero3.jpg" class="card-img-top img-fluid" alt="Barbero 3">
+              <div class="card-body text-center">
+                <h5 class="card-title">Barbero 3</h5>
+                <p class="card-text">Experto en cortes urbanos y creativos.</p>
+              </div>
+            </div>
+          </label>  
+        </div>
+
+
+<!-- .........................TATUADORES........................................................ -->
+          <!-- TATUADOR 1 -->
+        <div class="col d-flex profesional tatuajes">
+           <label for="tatuador1" class="w-100">
+            <div class="card h-100 w-100 position-relative">
+              <div class="form-check position-absolute top-0 end-0 m-2">
+                <input class="form-check-input" type="radio" value="tatuador 1" id="tatuador1" name="profesional">
+              </div>
+              <img src="tatuador1.jpg" class="card-img-top img-fluid" alt="tatuador 1">
+              <div class="card-body text-center">
+                <h5 class="card-title">tatuador 1</h5>
+                <p class="card-text">Especialista tatuajes minimalistas y de línea fina.</p>
+              </div>
+            </div>
+          </label>
+        </div>
+
+
+          <!-- TATUADOR 2 -->
+        <div class="col d-flex profesional tatuajes">
+          <label for="tatuador2" class="w-100">
+            <div class="card h-100 w-100 position-relative">
+              <div class="form-check position-absolute top-0 end-0 m-2">
+                <input class="form-check-input" type="radio" value="tatuador 2" id="tatuador2" name="profesional">
+              </div>
+              <img src="tatuador2.jpg" class="card-img-top img-fluid" alt="tatuador 2">
+              <div class="card-body text-center">
+                <h5 class="card-title">tatuador 2</h5>
+                <p class="card-text">Especialista estilo realismo</p>
+              </div>
+            </div>
+          </label>
+        </div>
+
+          <!-- TATUADOR 3 -->
+        <div class="col d-flex profesional tatuajes">
+          <label for="tatuador3" class="w-100">
+            <div class="card h-100 w-100 position-relative">
+              <div class="form-check position-absolute top-0 end-0 m-2">
+                <input class="form-check-input" type="radio" value="tatuador 3" id="tatuador3" name="profesional">
+              </div>
+              <img src="tatuador3.jpg" class="card-img-top img-fluid" alt="tatuador 3">
+              <div class="card-body text-center">
+                <h5 class="card-title">Tatuador 3</h5>
+                <p class="card-text">Experto tatuajes a color.</p>
+              </div>
+            </div>
+          </label>  
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ------------------opcion 3--------------------- -->
+ <div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+      DATOS CLIENTE:
+    </button>
+  </h2>
+  <div id="collapseThree" class="accordion-collapse collapse container" data-bs-parent="#accordionExample">
+    <h4>Paso 3: Información del Cliente</h4>
+
+
+        <form id="formReserva">
+          <div class="row mb-3">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="email">Correo:</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="tel" id="telefono" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+              <input type="date" class="form-control" id="fecha_nacimiento" required>
+            </div>
+            <div class="mb-3">
+              <label for="observaciones" class="form-label">Observaciones</label>
+              <textarea id="observaciones" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Confirmar Reserva</button>
+          </div>
+        </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+   </section>
+
+
+     <!--.............................. Scripts NAVBAR................................-->
+  <script src="scripts/navbar.js"></script>
+
+  <!--.............................. Scripts reserva.js................................-->
+
+  <script src="scripts/reservas.js"></script>
+
+  
+
+    <!--....................................Scripts bootstrap..................................-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+</body>
+</html>

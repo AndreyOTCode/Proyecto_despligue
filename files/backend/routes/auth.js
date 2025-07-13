@@ -1,65 +1,57 @@
-// backend/auth.js
+// routes/auth.js
 const express = require('express');
-const mysql = require('mysql2');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
+const connection = require('../db'); // Ajusta si el archivo no se llama exactamente db.js
 
 const router = express.Router();
 
-// Conexión a MySQL
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234567890',
-  database: 'ragnarok_db'
-});
+// Ruta POST /api/registro
+router.post('/registro', (req, res) => {
+  const { nombre, telefono, email, fecha_nacimiento, contrasena, rol } = req.body;
 
-db.connect(err => {
-  if (err) {
-    console.error('Error de conexión a MySQL:', err);
-  } else {
-    console.log('Conectado a MySQL');
-  }
-});
-
-// Ruta de registro
-router.post('/registro', async (req, res) => {
-  const { nombre, telefono, email, contrasena } = req.body;
-
-  if (!nombre || !telefono || !email || !contrasena) {
+  // Validación rápida de campos requeridos
+  if (!nombre || !telefono || !email || !fecha_nacimiento || !contrasena || !rol) {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
 
-  db.query('SELECT * FROM usuarios WHERE email = ?', [email], async (err, results) => {
-    if (err) return res.status(500).json({ message: 'Error en el servidor' });
-    if (results.length > 0) return res.status(400).json({ message: 'El correo ya está registrado' });
+  // Verificar si el correo ya está registrado
+  const verificarEmail = 'SELECT id FROM usuarios WHERE email = ?';
+  connection.query(verificarEmail, [email], async (err, results) => {
+    if (err) {
+      console.error('❌ Error al verificar correo:', err);
+      return res.status(500).json({ message: 'Error en el servidor' });
+    }
 
-    const hashedPassword = await bcrypt.hash(contrasena, 10);
+    if (results.length > 0) {
+      return res.status(409).json({ message: 'Este correo ya está registrado' });
+    }
 
-    db.query(
-      'INSERT INTO usuarios (nombre, telefono, email, contrasena) VALUES (?, ?, ?, ?)',
-      [nombre, telefono, email, hashedPassword],
-      (err) => {
-        if (err) return res.status(500).json({ message: 'Error al registrar el usuario' });
-        res.status(200).json({ message: 'Usuario registrado correctamente' });
-      }
-    );
-  });
-});
+    try {
+      // Encriptar contraseña
+      const hash = await bcrypt.hash(contrasena, 10);
 
-// Ruta de login
-router.post('/login', (req, res) => {
-  const { email, contrasena } = req.body;
+      // Insertar nuevo usuario
+      const insertarUsuario = `
+        INSERT INTO usuarios (nombre, telefono, email, fecha_nacimiento, contrasena, rol)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `;
 
-  db.query('SELECT * FROM usuarios WHERE email = ?', [email], async (err, results) => {
-    if (err) return res.status(500).json({ message: 'Error en el servidor' });
-    if (results.length === 0) return res.status(401).json({ message: 'Correo no registrado' });
+      connection.query(
+        insertarUsuario,
+        [nombre, telefono, email, fecha_nacimiento, hash, rol],
+        (err, result) => {
+          if (err) {
+            console.error('❌ Error al registrar usuario:', err);
+            return res.status(500).json({ message: 'Error al registrar el usuario' });
+          }
 
-    const usuario = results[0];
-
-    const isMatch = await bcrypt.compare(contrasena, usuario.contrasena);
-    if (!isMatch) return res.status(401).json({ message: 'Contraseña incorrecta' });
-
-    res.status(200).json({ message: 'Inicio de sesión exitoso', usuario: usuario.nombre });
+          res.status(201).json({ message: 'Usuario registrado exitosamente' });
+        }
+      );
+    } catch (error) {
+      console.error('❌ Error al encriptar la contraseña:', error);
+      res.status(500).json({ message: 'Error al procesar la contraseña' });
+    }
   });
 });
 

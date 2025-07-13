@@ -4,10 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Servicios Tattoo</title>
-  <link rel="icon" href="icono.png" type="image/png">
+  <link rel="icon" href="img/icono.png" type="image/png">
   <link rel="stylesheet" href="estilos.css"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
 <body style="padding-top: 80px;"> 
 
   <!-- Navbar -->
@@ -35,7 +36,7 @@
     <!-- Imágenes del Slider -->
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="imagenes_tattoo_slider/slider1.jpg"d-block w-100" alt="Barbería 1">
+        <img src="imagenes_tattoo_slider/slider1.jpg" class="d-block w-100"  alt="Barbería 1">
       </div>
       <div class="carousel-item">
         <img src="imagenes_tattoo_slider/slider2.jpg" class="d-block w-100" alt="Barbería 2">
@@ -44,7 +45,7 @@
         <img src="imagenes_tattoo_slider/slider3.jpg" class="d-block w-100" alt="Barbería 3">
       </div>
       <div class="carousel-item">
-        <img src="imagenes_tattoo_slider/slider4.jpg"d-block w-100" alt="Barbería 4">
+        <img src="imagenes_tattoo_slider/slider4.jpg" class="d-block w-100" alt="Barbería 4">
       </div>
     </div>
 
@@ -74,7 +75,7 @@
           <h5 class="card-title">Tatuaje Pequeño</h5>
           <p class="card-text">Tatuajes sencillos, con una medida aproximada de 5x5cm</p>
           <p class="card-text"><strong>$100.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -86,7 +87,7 @@
           <h5 class="card-title">Tatuaje Mediano</h5>
           <p class="card-text">Tatuaje con un poco de más detalle, aproximadamente entre 5 y 12cm</p>
           <p class="card-text"><strong>$200.000 - $300.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -99,7 +100,7 @@
           <h5 class="card-title">Tatuaje Grande</h5>
           <p class="card-text">Tatuaje de alto detalle y tamaños por encima de 15cm, se cobra por sesiones</p>
           <p class="card-text"><strong>$600.000</strong></p>
-          <a href="#" class="btn btn-primary">Reservar</a>
+          <a href="reservas.html" class="btn btn-primary">Reservar</a>
         </div>
       </div>
     </div>
@@ -116,13 +117,9 @@
   </div>
 
   <!--.............................. Scripts NAVBAR................................-->
-  <script>
-    fetch('navbar.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('navbar-container').innerHTML = data;
-      });
-  </script>
+  <!--.............................. Scripts NAVBAR................................-->
+<script src="scripts/navbar.js"></script>
+
 <!--....................................Scripts bootstrap..................................-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

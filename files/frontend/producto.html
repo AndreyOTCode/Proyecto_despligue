@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos - Ragnarok</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="img/icono.png" type="image/png">
+  <link rel="stylesheet" href="estilos.css"/>
+</head>
+<body style="padding-top: 80px;">
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <section>
+    <!-- Botón del carrito -->
+    <div class="container-fluid d-flex justify-content-end carro boton_carro">
+      <button type="button" class="btn btn-outline-light position-relative car" id="cart-button" data-bs-backdrop="true" data-bs-toggle="offcanvas" data-bs-target="#cartDrawer" aria-controls="cartDrawer">
+        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
+      </button>
+    </div>
+
+    <!-- Carrito Offcanvas -->
+    <div class="offcanvas offcanvas-end bg-dark text-white" tabindex="-1" id="cartDrawer">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">🛒 Carrito</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body" id="cart-items">
+        <p>Tu carrito está vacío.</p>
+      </div>
+      <div class="p-3 border-top border-secondary">
+        <strong>Total: $<span id="cart-total">0</span></strong>
+        <div id="compra-error" class="text-danger text-center mb-2" style="display: none;">
+          ⚠️ Debes iniciar sesión o registrarte para finalizar la compra.
+          <div class="mt-2 d-flex justify-content-center gap-2">
+            <a href="login.html" class="btn btn-outline-light btn-sm">Iniciar sesión</a>
+            <a href="registro.html" class="btn btn-outline-light btn-sm">Registrarse</a>
+         </div>
+        </div>
+        
+        <div id="compra-exito" class="text-success text-center mb-2" style="display: none;">
+        </div>
+        
+        <div id="stock-error" class="alert alert-warning text-center py-1" style="display: none;">
+          No hay más stock disponible para este producto.
+        </div>
+        
+        <button class="btn btn-success w-100 mt-2">Finalizar compra</button>
+      </div>
+    </div>
+
+    <!-- Modal de resumen de compra -->
+<div class="modal fade" id="modalResumenCompra" tabindex="-1" aria-labelledby="modalResumenCompraLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content text-dark">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalResumenCompraLabel">🧾 Resumen de tu compra</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div id="detalle-recibo"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <!-- Puedes añadir un botón de imprimir aquí si lo deseas -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Título y selector -->
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Productos de Barbería y Tatuajes</h1>
+
+      <div class="container mb-4">
+        <div class="row justify-content-center">
+          <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+            <select id="filtro-productos" class="form-select select-estilizado w-100">
+              <option value="todos">Mostrar todos</option>
+              <option value="barberia">Productos de Barbería</option>
+              <option value="tatuajes">Productos de Tatuajes</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor de productos -->
+      <div class="row" id="productos-container">
+        <!-- Productos cargados dinámicamente desde la base de datos -->
+      </div>
+    </div>
+  </section>
+
+  <!--.............................. Scripts ................................-->
+  <script src="./scripts/productos.js"></script>
+  <script src="./scripts/carrito.js"></script>
+  <script src="scripts/navbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Filtro por categoría -->
+  <script>
+    document.getElementById('filtro-productos').addEventListener('change', function () {
+      const categoria = this.value;
+      const cards = document.querySelectorAll('#productos-container .card');
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-categoria');
+        card.parentElement.style.display = categoria === 'todos' || categoria === cat ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
