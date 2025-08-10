@@ -10,8 +10,9 @@ const usuarioRoutes = require('./routes/usuario');
 const logoutRoutes = require('./routes/logout'); 
 const productosRoutes = require('./routes/productos');
 const ventasRoutes = require('./routes/ventas');
-
-
+const disponibilidadRoutes = require('./routes/disponibilidad');
+const adminRoutes = require('./routes/admin');
+const usuarios = require('./routes/usuarios');
 
 const app = express();
 const PORT = 3000;
@@ -46,13 +47,13 @@ app.use((req, res, next) => {
 app.use('/api', authRoutes);
 app.use('/api/reservas', reservasRoutes);
 app.use('/api/login', loginRoutes);
-app.use('/api', usuarioRoutes);
 app.use('/api', logoutRoutes);   
 app.use('/api', productosRoutes);
 app.use('/api', ventasRoutes);
-
-
-
+app.use('/api/disponibilidad', disponibilidadRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/usuarios', usuarios);
+app.use('/api', usuarioRoutes);
 
 
 app.listen(PORT, () => {

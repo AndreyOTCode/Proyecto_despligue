@@ -1,7 +1,7 @@
 // backend/routes/reservas.js
 const express = require('express');
 const router  = express.Router();
-const connection = require('../db');
+const {connection} = require('../db');
 
 /*  POST /api/reservas
     Crea una reserva; si el usuario está en sesión no hace falta enviar su info.      */

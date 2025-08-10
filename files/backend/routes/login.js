@@ -1,7 +1,7 @@
 // backend/login.js
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const connection = require('../db');
+const {connection} = require('../db');
 
 const router = express.Router();
 

@@ -1,13 +1,14 @@
 // routes/auth.js
 const express = require('express');
 const bcrypt = require('bcrypt');
-const connection = require('../db'); // Ajusta si el archivo no se llama exactamente db.js
+const {connection} = require('../db'); // Ajusta si el archivo no se llama exactamente db.js
 
 const router = express.Router();
 
 // Ruta POST /api/registro
 router.post('/registro', (req, res) => {
-  const { nombre, telefono, email, fecha_nacimiento, contrasena, rol } = req.body;
+  const { nombre, telefono, email, fecha_nacimiento, contrasena} = req.body;
+  const rol = 'cliente';
 
   // Validación rápida de campos requeridos
   if (!nombre || !telefono || !email || !fecha_nacimiento || !contrasena || !rol) {

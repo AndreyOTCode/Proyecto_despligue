@@ -1,3 +1,4 @@
+//frontend/scripts/index.js
 document.addEventListener('DOMContentLoaded', async () => {
   const paginaActual = location.pathname;
 
