@@ -3,6 +3,11 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
+
+const { setupDatabase } = require('./db'); 
+setupDatabase();
+
 const authRoutes = require('./routes/auth');
 const reservasRoutes = require('./routes/reservas');
 const loginRoutes = require('./routes/login');
@@ -13,6 +18,8 @@ const ventasRoutes = require('./routes/ventas');
 const disponibilidadRoutes = require('./routes/disponibilidad');
 const adminRoutes = require('./routes/admin');
 const usuarios = require('./routes/usuarios');
+const inventariosRoutes = require('./routes/inventarios');
+
 
 const app = express();
 const PORT = 3000;
@@ -34,6 +41,11 @@ app.use(session({
     }
 }));
 
+
+// 📌 Servir carpeta de fotos de usuarios de forma pública
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 //  🔍 Logger de cookies y sesión
 app.use((req, res, next) => {
   console.log('➡️  Petición:', req.method, req.originalUrl);
@@ -54,6 +66,7 @@ app.use('/api/disponibilidad', disponibilidadRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/usuarios', usuarios);
 app.use('/api', usuarioRoutes);
+app.use('/api/inventarios', inventariosRoutes);
 
 
 app.listen(PORT, () => {

@@ -5,7 +5,7 @@ const {connection} = require('../db');
 // Obtener todos los productos (esto ya lo tienes bien)
 router.get('/productos', (req, res) => {
   const sql = 'SELECT * FROM productos';
-  db.query(sql, (err, results) => {
+  connection.query(sql, (err, results) => {
     if (err) {
       console.error('Error al obtener productos:', err);
       return res.status(500).json({ error: 'Error interno' });

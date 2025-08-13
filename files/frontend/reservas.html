@@ -1,3 +1,4 @@
+<!-- //frontend/reservas.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,8 +47,8 @@
                             <label for="opciones" class="form-label">Elige un servicio: </label>
                             <select name="opciones" id="opciones" class="form-select">
                                <option selected>Seleccionar: </option>
-                               <option value="barberia" class="form-control">BARBERIA</option>
-                               <option value="tatuajes">TATUAJES</option>
+                               <option value="barbero" class="form-control">BARBERIA</option>
+                               <option value="tatuador">TATUAJES</option>
                             </select>
                         </div>
                      </div>
@@ -57,126 +58,23 @@
   </div>
   
  <!-- ----------------------- opcion 2 --------------------------->
-  <div class="accordion-item">
+<div class="accordion-item">
   <h2 class="accordion-header">
     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
       data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
       PROFESIONAL:
     </button>
   </h2>
+
   <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
     <div class="accordion-body">
       <h4>Paso 2: Selecciona Profesional</h4>
 
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-
-
-
-<!-- .........................BARBEROS........................................................ -->
-          <!-- BARBERO 1 -->
-        <div class="col d-flex profesional barberia">
-           <label for="barbero1" class="w-100">
-            <div class="card h-100 w-100 position-relative">
-              <div class="form-check position-absolute top-0 end-0 m-2">
-                <input class="form-check-input" type="radio" value="Barbero 1" id="barbero1" name="profesional">
-              </div>
-              <img src="img/barberia.jpg" class="card-img-top img-fluid" alt="Barbero 1">
-              <div class="card-body text-center">
-                <h5 class="card-title">Barbero 1</h5>
-                <p class="card-text">Especialista en cortes modernos y degradados.</p>
-              </div>
-            </div>
-          </label>
-        </div>
-
-
-          <!-- BARBERO 2 -->
-        <div class="col d-flex profesional barberia">
-          <label for="barbero2" class="w-100">
-            <div class="card h-100 w-100 position-relative">
-              <div class="form-check position-absolute top-0 end-0 m-2">
-                <input class="form-check-input" type="radio" value="Barbero 2" id="barbero2" name="profesional">
-              </div>
-              <img src="barbero2.jpg" class="card-img-top img-fluid" alt="Barbero 2">
-              <div class="card-body text-center">
-                <h5 class="card-title">Barbero 2</h5>
-                <p class="card-text">Especialista en barba y estilo clásico.</p>
-              </div>
-            </div>
-          </label>
-        </div>
-
-          <!-- BARBERO 3 -->
-        <div class="col d-flex profesional barberia">
-          <label for="barbero3" class="w-100">
-            <div class="card h-100 w-100 position-relative">
-              <div class="form-check position-absolute top-0 end-0 m-2">
-                <input class="form-check-input" type="radio" value="Barbero 3" id="barbero3" name="profesional">
-              </div>
-              <img src="barbero3.jpg" class="card-img-top img-fluid" alt="Barbero 3">
-              <div class="card-body text-center">
-                <h5 class="card-title">Barbero 3</h5>
-                <p class="card-text">Experto en cortes urbanos y creativos.</p>
-              </div>
-            </div>
-          </label>  
-        </div>
-
-
-<!-- .........................TATUADORES........................................................ -->
-          <!-- TATUADOR 1 -->
-        <div class="col d-flex profesional tatuajes">
-           <label for="tatuador1" class="w-100">
-            <div class="card h-100 w-100 position-relative">
-              <div class="form-check position-absolute top-0 end-0 m-2">
-                <input class="form-check-input" type="radio" value="tatuador 1" id="tatuador1" name="profesional">
-              </div>
-              <img src="tatuador1.jpg" class="card-img-top img-fluid" alt="tatuador 1">
-              <div class="card-body text-center">
-                <h5 class="card-title">tatuador 1</h5>
-                <p class="card-text">Especialista tatuajes minimalistas y de línea fina.</p>
-              </div>
-            </div>
-          </label>
-        </div>
-
-
-          <!-- TATUADOR 2 -->
-        <div class="col d-flex profesional tatuajes">
-          <label for="tatuador2" class="w-100">
-            <div class="card h-100 w-100 position-relative">
-              <div class="form-check position-absolute top-0 end-0 m-2">
-                <input class="form-check-input" type="radio" value="tatuador 2" id="tatuador2" name="profesional">
-              </div>
-              <img src="tatuador2.jpg" class="card-img-top img-fluid" alt="tatuador 2">
-              <div class="card-body text-center">
-                <h5 class="card-title">tatuador 2</h5>
-                <p class="card-text">Especialista estilo realismo</p>
-              </div>
-            </div>
-          </label>
-        </div>
-
-          <!-- TATUADOR 3 -->
-        <div class="col d-flex profesional tatuajes">
-          <label for="tatuador3" class="w-100">
-            <div class="card h-100 w-100 position-relative">
-              <div class="form-check position-absolute top-0 end-0 m-2">
-                <input class="form-check-input" type="radio" value="tatuador 3" id="tatuador3" name="profesional">
-              </div>
-              <img src="tatuador3.jpg" class="card-img-top img-fluid" alt="tatuador 3">
-              <div class="card-body text-center">
-                <h5 class="card-title">Tatuador 3</h5>
-                <p class="card-text">Experto tatuajes a color.</p>
-              </div>
-            </div>
-          </label>  
-        </div>
-
-
-        </div>
+      <!-- Solo un row, sin container extra -->
+      <div id="contenedor-profesionales" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <!-- Las tarjetas se insertan aquí -->
       </div>
+
     </div>
   </div>
 </div>
