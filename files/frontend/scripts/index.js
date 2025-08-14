@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       ref.parentNode.insertBefore(seccionAdmin, ref);
     }
 
-
     if (rol === 'barbero' || rol === 'tatuador') {
       const seccionArtista = document.createElement('section');
       seccionArtista.className = 'contenido-reserva bg-dark text-light p-4';
@@ -48,6 +47,21 @@ document.addEventListener('DOMContentLoaded', async () => {
           </div>
         </div>`;
       ref.parentNode.insertBefore(seccionArtista, ref);
+    }
+
+    // 🔹 Nuevo: Mostrar acceso a citas si el usuario es cliente
+    if (rol === 'cliente') {
+      const seccionCliente = document.createElement('section');
+      seccionCliente.className = 'contenido-reserva bg-dark text-light p-4';
+      seccionCliente.innerHTML = `
+        <div class="contenido-texto text-center contenedor mt-5">
+          <h2>Mis Citas</h2>
+          <p>Bienvenido, ${usuario.nombre}. Aquí puedes ver y gestionar tus citas.</p>
+          <div class="botones">
+            <a href="citas.html" class="btn btn-outline-light m-1">Ver/Cancelar Citas</a>
+          </div>
+        </div>`;
+      ref.parentNode.insertBefore(seccionCliente, ref);
     }
 
   } catch (error) {

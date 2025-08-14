@@ -1,15 +1,66 @@
-// backend/routes/reservas.js
 const express = require('express');
 const router  = express.Router();
-const {connection} = require('../db');
+const { connection } = require('../db');
 
-/*  POST /api/reservas
-    Crea una reserva; si el usuario está en sesión no hace falta enviar su info.      */
+/* GET /api/reservas
+   - Admin: ve todas
+   - Usuario: ve sólo las suyas (por usuario_id o por email de la sesión) */
+router.get('/', (req, res) => {
+  const sesion = req.session.usuario || null;
+
+  let sql = 'SELECT * FROM reservas';
+  let params = [];
+
+  if (sesion && sesion.rol !== 'admin') {
+    sql += ' WHERE usuario_id = ? OR email = ?';
+    params = [sesion.id || 0, sesion.email || ''];
+  }
+
+  connection.query(sql, params, (err, rows) => {
+    if (err) {
+      console.error('Error al obtener reservas:', err);
+      return res.status(500).json({ message: 'Error al obtener reservas' });
+    }
+    res.json(rows);
+  });
+});
+
+/* DELETE /api/reservas/:id
+   - Admin: puede borrar cualquiera
+   - Usuario: sólo borra citas suyas (por usuario_id) */
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const sesion = req.session.usuario || null;
+
+  if (sesion && sesion.rol === 'admin') {
+    connection.query('DELETE FROM reservas WHERE id = ?', [id], (err, result) => {
+      if (err) {
+        console.error('Error al eliminar reserva:', err);
+        return res.status(500).json({ message: 'Error al eliminar reserva' });
+      }
+      if (result.affectedRows === 0) return res.status(404).json({ message: 'Reserva no encontrada' });
+      res.json({ message: 'Reserva eliminada' });
+    });
+    return;
+  }
+
+  if (sesion && sesion.id) {
+    connection.query('DELETE FROM reservas WHERE id = ? AND usuario_id = ?', [id, sesion.id], (err, result) => {
+      if (err) {
+        console.error('Error al eliminar reserva:', err);
+        return res.status(500).json({ message: 'Error al eliminar reserva' });
+      }
+      if (result.affectedRows === 0) return res.status(403).json({ message: 'No autorizado o reserva no encontrada' });
+      res.json({ message: 'Reserva eliminada' });
+    });
+  } else {
+    res.status(401).json({ message: 'No autenticado' });
+  }
+});
+
+/* POST (tu ruta existente, no la toco) */
 router.post('/', (req, res) => {
-  // Si el usuario está autenticado, tomamos sus datos de la sesión
   const sesion = req.session.usuario || {};
-
-  // Datos que llegan del frontend
   const {
     usuario_id      = sesion.id      || null,
     nombre          = sesion.nombre  || '',
@@ -19,7 +70,6 @@ router.post('/', (req, res) => {
     fecha, hora, servicio, profesional, observaciones = ''
   } = req.body;
 
-  // Validación mínima
   if (!nombre || !email || !telefono || !fecha_nacimiento ||
       !fecha || !hora || !servicio || !profesional) {
     return res.status(400).json({ message: 'Faltan campos obligatorios' });
@@ -33,10 +83,8 @@ router.post('/', (req, res) => {
 
   connection.query(
     sql,
-    [
-      usuario_id, nombre, email, telefono, fecha_nacimiento,
-      fecha, hora, servicio, profesional, observaciones
-    ],
+    [usuario_id, nombre, email, telefono, fecha_nacimiento,
+     fecha, hora, servicio, profesional, observaciones],
     err => {
       if (err) {
         console.error('Error al guardar la reserva:', err);

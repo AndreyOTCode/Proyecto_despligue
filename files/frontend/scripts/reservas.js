@@ -29,39 +29,37 @@ async function cargarProfesionales() {
     const res = await fetch('http://localhost:3000/api/usuarios/artistas', {
       credentials: 'include'
     });
-
     const artistas = await res.json();
-
     const contenedor = document.getElementById('contenedor-profesionales');
     contenedor.innerHTML = ''; // Limpiar antes de agregar
 
     artistas.forEach(artista => {
-  const col = document.createElement('div');
-  col.className = `profesional col d-none ${artista.rol}`; // solo col, sin margen extra
+      const col = document.createElement('div');
+      col.className = `profesional col d-none ${artista.rol}`; // solo col, sin margen extra
 
-  let fotoSrc = artista.foto && artista.foto.trim() !== '' ? artista.foto : '/uploads/fotos_usuarios/default.png';
+     let fotoSrc = artista.foto && artista.foto.trim() !== '' ? artista.foto : '/uploads/fotos_usuarios/default.png';
 
-  col.innerHTML = `
-    <div class="card h-100 text-center shadow-sm position-relative p-2">
-      
-      <!-- Radio arriba derecha -->
-      <div class="form-check position-absolute" style="top: 8px; right: 8px;">
-        <input class="form-check-input" type="radio" name="profesional" value="${artista.id}" id="prof-${artista.id}">
-        <label class="form-check-label" for="prof-${artista.id}"></label>
-      </div>
+      col.innerHTML = `
+        <div class="card h-100 text-center shadow-sm position-relative p-2">
+          
+          <!-- Radio arriba derecha -->
+          <div class="form-check position-absolute" style="top: 8px; right: 8px;">
+            <input class="form-check-input" type="radio" name="profesional" value="${artista.nombre}" id="prof-${artista.nombre}">
+            <label class="form-check-label" for="prof-${artista.nombre}"></label>
+          </div>
 
-      <!-- Foto del artista -->
-      <img src="${fotoSrc}" 
-           class="card-img-top mx-auto mt-3" 
-           style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;" 
-           alt="${artista.nombre}">
+          <!-- Foto del artista -->
+          <img src="${fotoSrc}" 
+              class="card-img-top mx-auto mt-3" 
+              style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;" 
+              alt="${artista.nombre}">
 
-      <!-- Información -->
-      <div class="card-body d-flex flex-column justify-content-center">
-        <h5 class="card-title mt-3">${artista.nombre}</h5>
-      </div>
-    </div>
-  `;
+          <!-- Información -->
+          <div class="card-body d-flex flex-column justify-content-center">
+            <h5 class="card-title mt-3">${artista.nombre}</h5>
+          </div>
+        </div>
+      `;
 
   contenedor.appendChild(col);
 });
