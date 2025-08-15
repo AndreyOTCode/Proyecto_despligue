@@ -2,27 +2,6 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 
-// Conexión normal para las partes antiguas (login, etc.)
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-});
-
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Conectado a la base de datos MySQL');
-});
-
-// Pool de promesas para consultas con async/await
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-}).promise();
-
 async function setupDatabase() {
   try {
     // Conexión temporal en modo promesa
@@ -159,5 +138,28 @@ async function setupDatabase() {
     console.error("❌ Error creando base de datos o tablas:", error);
   }
 }
+
+
+// Conexión normal para las partes antiguas (login, etc.)
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
+
+connection.connect((err) => {
+  if (err) throw err;
+  console.log('Conectado a la base de datos MySQL');
+});
+
+// Pool de promesas para consultas con async/await
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+}).promise();
+
 
 module.exports = { connection, pool, setupDatabase };
