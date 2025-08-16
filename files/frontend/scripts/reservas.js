@@ -1,3 +1,5 @@
+//frontend/scripts/reservas.js
+
 document.addEventListener('DOMContentLoaded', () => {
   /* -------- Desde el día actual en adelante -------- */
   const today = new Date();
@@ -5,7 +7,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const dd = String(today.getDate()).padStart(2, '0');
   const minDate = `${yyyy}-${mm}-${dd}`;
-  document.getElementById('fecha').setAttribute('min', minDate);
+  const errorHora = document.getElementById('error_hora');
+  const inputFecha = document.getElementById('fecha');
+  inputFecha.setAttribute('min', minDate);
+
+  /* -------- Bloquear domingos -------- */
+  inputFecha.addEventListener('input', () => {
+    const fechaSeleccionada = new Date(inputFecha.value);
+    if (fechaSeleccionada.getDay() === 0) { // 0 = domingo
+      alert("No se pueden seleccionar domingos.");
+      inputFecha.value = ""; // limpiar selección
+    }
+  });
+
+  /* -------- Validación de hora -------- */
+  const inputHora = document.getElementById('hora');
+  inputHora.addEventListener('input', () => {
+    const valor = inputHora.value;
+    if (!valor) return;
+
+    const [hora, minuto] = valor.split(':').map(Number);
+
+    const esManana = hora >= 8 && hora < 12;
+    const esTarde = hora >= 14 && hora < 19;
+
+      if (!(esManana || esTarde)) {
+    errorHora.textContent = "El horario válido es de 8am a 12pm y de 2pm a 7pm.";
+    inputHora.value = ""; // opcional: limpiar el input
+  } else {
+    errorHora.textContent = ""; // limpiar error si es válido
+  }
+  });
 
   /* -------- Seleccionar barberos o tatuadores -------- */
   const servicioSelect = document.getElementById('opciones');
@@ -24,62 +56,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   servicioSelect.addEventListener('change', filtrarProfesionales);
 
-async function cargarProfesionales() {
-  try {
-    const res = await fetch('http://localhost:3000/api/usuarios/artistas', {
-      credentials: 'include'
-    });
-    const artistas = await res.json();
-    const contenedor = document.getElementById('contenedor-profesionales');
-    contenedor.innerHTML = ''; // Limpiar antes de agregar
+  async function cargarProfesionales() {
+    try {
+      const res = await fetch('http://localhost:3000/api/usuarios/artistas', {
+        credentials: 'include'
+      });
+      const artistas = await res.json();
+      const contenedor = document.getElementById('contenedor-profesionales');
+      contenedor.innerHTML = ''; // Limpiar antes de agregar
 
-    artistas.forEach(artista => {
-      const col = document.createElement('div');
-      col.className = `profesional col d-none ${artista.rol}`; // solo col, sin margen extra
+      artistas.forEach(artista => {
+        const col = document.createElement('div');
+        col.className = `profesional col d-none ${artista.rol}`;
 
-     let fotoSrc = artista.foto && artista.foto.trim() !== '' ? artista.foto : '/uploads/fotos_usuarios/default.png';
+        let fotoSrc = artista.foto && artista.foto.trim() !== '' ? artista.foto : '/uploads/fotos_usuarios/default.png';
 
-      col.innerHTML = `
-        <div class="card h-100 text-center shadow-sm position-relative p-2">
-          
-          <!-- Radio arriba derecha -->
-          <div class="form-check position-absolute" style="top: 8px; right: 8px;">
-            <input class="form-check-input" type="radio" name="profesional" value="${artista.nombre}" id="prof-${artista.nombre}">
-            <label class="form-check-label" for="prof-${artista.nombre}"></label>
+        col.innerHTML = `
+          <div class="card h-100 text-center shadow-sm position-relative p-2">
+            <div class="form-check position-absolute" style="top: 8px; right: 8px;">
+              <input class="form-check-input" type="radio" name="profesional" value="${artista.nombre}" id="prof-${artista.nombre}">
+              <label class="form-check-label" for="prof-${artista.nombre}"></label>
+            </div>
+            <img src="${fotoSrc}" 
+                class="card-img-top mx-auto mt-3" 
+                style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;" 
+                alt="${artista.nombre}">
+            <div class="card-body d-flex flex-column justify-content-center">
+              <h5 class="card-title mt-3">${artista.nombre}</h5>
+            </div>
           </div>
+        `;
 
-          <!-- Foto del artista -->
-          <img src="${fotoSrc}" 
-              class="card-img-top mx-auto mt-3" 
-              style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;" 
-              alt="${artista.nombre}">
+        contenedor.appendChild(col);
+      });
 
-          <!-- Información -->
-          <div class="card-body d-flex flex-column justify-content-center">
-            <h5 class="card-title mt-3">${artista.nombre}</h5>
-          </div>
-        </div>
-      `;
-
-  contenedor.appendChild(col);
-});
-
-
-    profesionales = Array.from(document.querySelectorAll('.profesional'));
-    filtrarProfesionales();
-  } catch (err) {
-    console.error('Error cargando profesionales:', err);
+      profesionales = Array.from(document.querySelectorAll('.profesional'));
+      filtrarProfesionales();
+    } catch (err) {
+      console.error('Error cargando profesionales:', err);
+    }
   }
-}
-
-
 
   cargarProfesionales();
 
   /* -------- Hacer Reservas -------- */
   let usuario = null;
 
-  // 1. Pedir sesión
   fetch('http://localhost:3000/api/usuario-sesion', {
     credentials: 'include'
   })
@@ -143,6 +165,5 @@ async function cargarProfesionales() {
       console.error('Error:', err);
       alert('Hubo un problema al guardar la reserva');
     });
-});
-
+  });
 });

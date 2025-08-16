@@ -42,10 +42,12 @@
         <label for="email">Correo:</label>
         <input type="email" class="form-control" id="email" required>
       </div>
-      <div class="mb-3">
-        <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-        <input type="date" class="form-control" id="fecha_nacimiento" required>
-      </div>
+       <div class="mb-3">
+      <label for="fecha_nacimiento">Fecha de nacimiento: (Mayor de 18 años)</label>
+      <input type="date" class="form-control" id="fecha_nacimiento" required>
+      <!-- Mensaje de error -->
+      <small id="errorEdad" class="text-danger"></small>
+    </div>
       <div class="mb-3">
         <label for="contrasena">Contraseña:</label>
         <input type="password" class="form-control" id="contrasena" required>
