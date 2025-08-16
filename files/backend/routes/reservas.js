@@ -1,3 +1,4 @@
+//backend/routes/reservas.js
 const express = require('express');
 const router  = express.Router();
 const { connection } = require('../db');
@@ -94,5 +95,39 @@ router.post('/', (req, res) => {
     }
   );
 });
+
+// GET /api/reservas/profesional
+// - barbero/tatuador: ve SOLO sus citas (coincidencia por "profesional")
+// - admin: puede filtrar pasando ?profesional=Nombre
+router.get('/profesional', (req, res) => {
+  const sesion = req.session.usuario || null;
+  if (!sesion) return res.status(401).json({ message: 'No autenticado' });
+
+  const esStaff = ['barbero', 'tatuador', 'admin'].includes(sesion.rol);
+  if (!esStaff) return res.status(403).json({ message: 'No autorizado' });
+
+  // Si no viene query, usamos el nombre en sesión (barbero/tatuador)
+  const profesional = (req.query.profesional || sesion.nombre || '').trim();
+  if (!profesional) {
+    return res.status(400).json({ message: 'No se pudo determinar el profesional' });
+  }
+
+const sql = `
+  SELECT id, fecha, hora, servicio, profesional, observaciones, nombre
+  FROM reservas
+  WHERE LOWER(TRIM(profesional)) = LOWER(TRIM(?))
+  ORDER BY fecha, hora
+`;
+
+
+  connection.query(sql, [profesional], (err, rows) => {
+    if (err) {
+      console.error('Error al obtener reservas del profesional:', err);
+      return res.status(500).json({ message: 'Error al obtener reservas del profesional' });
+    }
+    res.json(rows);
+  });
+});
+
 
 module.exports = router;

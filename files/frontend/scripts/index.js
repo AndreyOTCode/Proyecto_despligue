@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       seccionAdmin.innerHTML = `
         <div class="contenido-texto text-center contenedor zonaAdministrativa mt-5">
           <h2>Zona Administrativa</h2>
+          <p>Bienvenido, ${usuario.nombre}, ${usuario.rol}. Aquí puedes administrar tu negocio: </p>
           <a href="admin.html" class="btn btn-outline-light">⚙️ Ir al panel</a>
         </div>`;
       ref.parentNode.insertBefore(seccionAdmin, ref);
@@ -40,10 +41,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       seccionArtista.innerHTML = `
         <div class="contenido-texto text-center contenedor mt-5">
           <h2>Zona de Citas (${rol})</h2>
-          <p>Bienvenido, ${usuario.nombre}. Consulta y gestiona tus citas.</p>
+          <p>Bienvenid@, ${usuario.nombre}, ${usuario.rol}@. Consulta y gestiona tus citas.</p>
           <div class="botones">
             <a href="consultaCitas.html" class="btn btn-outline-light m-1">Consultar Citas</a>
-            <a href="DisponibilidadArtista.html" class="btn btn-outline-light m-1">Disponibilidad</a>
           </div>
         </div>`;
       ref.parentNode.insertBefore(seccionArtista, ref);
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       seccionCliente.innerHTML = `
         <div class="contenido-texto text-center contenedor mt-5">
           <h2>Mis Citas</h2>
-          <p>Bienvenido, ${usuario.nombre}. Aquí puedes ver y gestionar tus citas.</p>
+          <p>Bienvenid@, ${usuario.nombre}. Aquí puedes ver y gestionar tus citas.</p>
           <div class="botones">
             <a href="citas.html" class="btn btn-outline-light m-1">Ver/Cancelar Citas</a>
           </div>
