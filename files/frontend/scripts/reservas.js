@@ -11,14 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputFecha = document.getElementById('fecha');
   inputFecha.setAttribute('min', minDate);
 
-  /* -------- Bloquear domingos -------- */
-  inputFecha.addEventListener('input', () => {
-    const fechaSeleccionada = new Date(inputFecha.value);
-    if (fechaSeleccionada.getDay() === 0) { // 0 = domingo
-      alert("No se pueden seleccionar domingos.");
-      inputFecha.value = ""; // limpiar selección
-    }
-  });
 
   /* -------- Validación de hora -------- */
   const inputHora = document.getElementById('hora');
@@ -147,20 +139,30 @@ document.addEventListener('DOMContentLoaded', () => {
       return res.json();
     })
     .then(() => {
-      alert('Reserva registrada con éxito');
-      form.reset();
+  alert('Reserva registrada con éxito');
 
-      if (usuario) {
-        document.getElementById('nombre').value  = usuario.nombre;
-        document.getElementById('email').value   = usuario.email;
-        document.getElementById('telefono').value= usuario.telefono;
-        document.getElementById('fecha_nacimiento').value =
-          usuario.fecha_nacimiento.slice(0, 10);
-      }
+  // 🔹 Limpiar el formulario completo
+  form.reset();
 
-      servicioSelect.value = '';
-      filtrarProfesionales();
-    })
+  // 🔹 Volver a mostrar los datos del usuario si está en sesión
+  if (usuario) {
+    document.getElementById('nombre').value  = "";
+    document.getElementById('email').value   = "";
+    document.getElementById('telefono').value= "";
+    document.getElementById('fecha_nacimiento').value = "";
+  }
+
+  // 🔹 Limpiar selects y radios
+  servicioSelect.value = '';
+  document.querySelectorAll('input[name="profesional"]').forEach(r => r.checked = false);
+
+  // 🔹 Volver a ocultar los profesionales
+  filtrarProfesionales();
+
+  // 🔹 Limpiar mensajes de error (ejemplo: error_hora)
+  errorHora.textContent = '';
+})
+
     .catch(err => {
       console.error('Error:', err);
       alert('Hubo un problema al guardar la reserva');
