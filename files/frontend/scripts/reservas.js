@@ -146,10 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 🔹 Volver a mostrar los datos del usuario si está en sesión
   if (usuario) {
-    document.getElementById('nombre').value  = "";
-    document.getElementById('email').value   = "";
-    document.getElementById('telefono').value= "";
-    document.getElementById('fecha_nacimiento').value = "";
+    document.getElementById('nombre').value  = usuario.nombre;
+    document.getElementById('email').value   = usuario.email;
+    document.getElementById('telefono').value= usuario.telefono;
+    document.getElementById('fecha_nacimiento').value =
+      usuario.fecha_nacimiento.slice(0, 10);
   }
 
   // 🔹 Limpiar selects y radios
