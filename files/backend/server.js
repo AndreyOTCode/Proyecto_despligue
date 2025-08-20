@@ -22,7 +22,11 @@ const inventariosRoutes = require('./routes/inventarios');
 
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
+app.set("trust proxy", 1);
+
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.use(cors({
   origin: ['http://localhost:5500','http://127.0.0.1:5500'],
@@ -36,8 +40,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 2,
-      sameSite: 'lax', // Sesión válida por 2 horas (ajustable)
-      secure: false  
+      secure: process.env.NODE_ENV === "production", // true solo en prod
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     }
 }));
 
