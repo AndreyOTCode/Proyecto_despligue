@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function cargarProfesionales() {
     try {
-      const res = await fetch('http://localhost:3000/api/usuarios/artistas', {
+      const res = await fetch('/api/usuarios/artistas', {
         credentials: 'include'
       });
       const artistas = await res.json();
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* -------- Hacer Reservas -------- */
   let usuario = null;
 
-  fetch('http://localhost:3000/api/usuario-sesion', {
+  fetch('/api/usuario-sesion', {
     credentials: 'include'
   })
     .then(res => (res.ok ? res.json() : null))

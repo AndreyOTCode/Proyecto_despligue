@@ -1,6 +1,6 @@
 // frontend/scripts/citas.js
 document.addEventListener('DOMContentLoaded', () => {
-  const BASE_URL = 'http://localhost:3000/api/reservas';
+  const BASE_URL = '/api/reservas';
   const tablaCitas = document.getElementById('tabla-citas');
 
   async function cargarCitas() {

@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/api/productos', {
+fetch('/api/productos', {
   credentials: 'include'
 })
   .then(res => res.json())

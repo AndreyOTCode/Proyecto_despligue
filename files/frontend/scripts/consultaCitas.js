@@ -1,6 +1,6 @@
 //frontend/scripts/consultaCitas.js
 document.addEventListener('DOMContentLoaded', () => {
-  const BASE_URL = 'http://localhost:3000/api/reservas/profesional';
+  const BASE_URL = '/api/reservas/profesional';
   const tablaCitas = document.getElementById('tabla-citas');
 
   async function cargarCitas() {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.eliminarCita = async (id) => {
     if (confirm('¿Estás seguro de eliminar esta cita?')) {
       try {
-        const res = await fetch(`http://localhost:3000/api/reservas/${id}`, {
+        const res = await fetch(`/api/reservas/${id}`, {
           method: 'DELETE',
           credentials: 'include'
         });

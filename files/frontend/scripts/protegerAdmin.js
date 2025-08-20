@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/usuario-sesion', {
+    const res = await fetch('/api/usuario-sesion', {
       credentials: 'include'
     });
 

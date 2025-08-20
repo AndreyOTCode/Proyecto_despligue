@@ -27,9 +27,11 @@ const PORT = process.env.PORT || 3000;
 app.set("trust proxy", 1);
 
 app.use(express.static(path.join(__dirname, "../frontend")));
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
 app.use(cors({
-  origin: ['http://localhost:5500','http://127.0.0.1:5500'],
+  origin: true,
   credentials: true              
 }));
 app.use(bodyParser.json());

@@ -1,7 +1,7 @@
 //frontend/scripts/innventario.js
 
 document.addEventListener('DOMContentLoaded', () => {
-const BASE_URL = 'http://localhost:3000/api/inventarios';
+const BASE_URL = '/api/inventarios';
 
 
   const tablaProductos = document.getElementById('tabla-productos');

@@ -8,7 +8,7 @@ fetch('navbar.html')
     const logoutButton = document.getElementById('logout');
 
     // Verifica si hay sesión activa
-    fetch('http://localhost:3000/api/usuario-sesion', {
+    fetch('/api/usuario-sesion', {
       method: 'GET',
       credentials: 'include'
     })
@@ -23,7 +23,7 @@ fetch('navbar.html')
     // Configura el botón de logout
     if (logoutButton) {
       logoutButton.addEventListener('click', () => {
-        fetch('http://localhost:3000/api/logout', {
+        fetch('/api/logout', {
           method: 'POST',
           credentials: 'include'
         })
