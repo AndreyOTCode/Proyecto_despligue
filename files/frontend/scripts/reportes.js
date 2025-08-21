@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnFiltrar = document.getElementById('btn-filtrar');
 
   function cargarVentas(inicio = '', fin = '') {
-    let url = '/api/reporte-ventas';
+    let url = 'https://proyecto-despligue.onrender.com/api/reporte-ventas';
     if (inicio && fin) {
       url += `?inicio=${inicio}&fin=${fin}`;
     }

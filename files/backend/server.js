@@ -25,7 +25,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: true,
+  origin: "https://ragnarokapp.netlify.app/",
   credentials: true              
 }));
 app.use(bodyParser.json());

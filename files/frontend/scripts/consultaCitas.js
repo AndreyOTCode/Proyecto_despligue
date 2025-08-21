@@ -1,6 +1,6 @@
 //frontend/scripts/consultaCitas.js
 document.addEventListener('DOMContentLoaded', () => {
-  const BASE_URL = '/api/reservas/profesional';
+  const BASE_URL = 'https://proyecto-despligue.onrender.com/api/reservas/profesional';
   const tablaCitas = document.getElementById('tabla-citas');
 
   async function cargarCitas() {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.eliminarCita = async (id) => {
     if (confirm('¿Estás seguro de eliminar esta cita?')) {
       try {
-        const res = await fetch(`/api/reservas/${id}`, {
+        const res = await fetch(`https://proyecto-despligue.onrender.com/api/reservas/${id}`, {
           method: 'DELETE',
           credentials: 'include'
         });

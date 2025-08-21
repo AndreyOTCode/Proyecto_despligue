@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const res = await fetch('/api/usuario-sesion', {
+    const res = await fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
       credentials: 'include'
     });
 

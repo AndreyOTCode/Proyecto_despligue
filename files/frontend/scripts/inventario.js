@@ -1,7 +1,7 @@
 //frontend/scripts/innventario.js
 
 document.addEventListener('DOMContentLoaded', () => {
-const BASE_URL = '/api/inventarios';
+const BASE_URL = 'https://proyecto-despligue.onrender.com/api/inventarios';
 
 
   const tablaProductos = document.getElementById('tabla-productos');

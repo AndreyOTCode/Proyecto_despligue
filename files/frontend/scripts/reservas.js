@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function cargarProfesionales() {
     try {
-      const res = await fetch('/api/usuarios/artistas', {
+      const res = await fetch('https://proyecto-despligue.onrender.com/api/usuarios/artistas', {
         credentials: 'include'
       });
       const artistas = await res.json();
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* -------- Hacer Reservas -------- */
   let usuario = null;
 
-  fetch('/api/usuario-sesion', {
+  fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
     credentials: 'include'
   })
     .then(res => (res.ok ? res.json() : null))
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       observaciones:    document.getElementById('observaciones').value
     };
 
-    fetch('http://localhost:3000/api/reservas', {
+    fetch('https://proyecto-despligue.onrender.com/api/reservas', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

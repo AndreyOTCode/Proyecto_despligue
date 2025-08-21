@@ -1,6 +1,6 @@
 // frontend/scripts/usuarios.js
 document.addEventListener('DOMContentLoaded', () => {
-  const BASE_URL = '/api/usuarios';
+  const BASE_URL = 'https://proyecto-despligue.onrender.com/api/usuarios';
 
   const tablaUsuarios = document.getElementById('tabla-usuarios');
   const formulario = document.getElementById('form-usuario');

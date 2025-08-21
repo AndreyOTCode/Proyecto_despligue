@@ -8,7 +8,7 @@ fetch('navbar.html')
     const logoutButton = document.getElementById('logout');
 
     // Verifica si hay sesión activa
-    fetch('/api/usuario-sesion', {
+    fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
       method: 'GET',
       credentials: 'include'
     })
@@ -23,7 +23,7 @@ fetch('navbar.html')
     // Configura el botón de logout
     if (logoutButton) {
       logoutButton.addEventListener('click', () => {
-        fetch('/api/logout', {
+        fetch('https://proyecto-despligue.onrender.com/api/logout', {
           method: 'POST',
           credentials: 'include'
         })

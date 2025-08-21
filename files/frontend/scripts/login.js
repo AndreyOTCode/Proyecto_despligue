@@ -6,7 +6,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   const contrasena = document.getElementById('contrasena').value;
 
   try {
-    const res = await fetch('/api/login', {
+    const res = await fetch('https://proyecto-despligue.onrender.com/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

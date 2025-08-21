@@ -1,4 +1,4 @@
-fetch('/api/productos', {
+fetch('https://proyecto-despligue.onrender.com/api/productos', {
   credentials: 'include'
 })
   .then(res => res.json())
