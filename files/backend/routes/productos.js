@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {connection} = require('../db');
+const { pool} = require('../db');
 
 // Obtener todos los productos (esto ya lo tienes bien)
 router.get('/productos', (req, res) => {
   const sql = 'SELECT * FROM productos';
-  connection.query(sql, (err, results) => {
+  pool.query(sql, (err, results) => {
     if (err) {
       console.error('Error al obtener productos:', err);
       return res.status(500).json({ error: 'Error interno' });
@@ -27,7 +27,7 @@ router.post('/descontar-stock', (req, res) => {
 
   const updates = productos.map(p => {
     return new Promise((resolve, reject) => {
-      connection.query(sql, [p.cantidad, p.id, p.cantidad], (err, result) => {
+      pool.query(sql, [p.cantidad, p.id, p.cantidad], (err, result) => {
         if (err) return reject(err);
         if (result.affectedRows === 0) fallos.push(p.id);
         resolve();
@@ -59,7 +59,7 @@ router.post('/registrar-venta', (req, res) => {
 
   // Insertar en tabla ventas
   const sqlVenta = 'INSERT INTO ventas (usuario_id, total) VALUES (?, ?)';
-  connection.query(sqlVenta, [usuario_id, totalVenta], (err, ventaResult) => {
+  pool.query(sqlVenta, [usuario_id, totalVenta], (err, ventaResult) => {
     if (err) {
       console.error('Error al registrar venta:', err);
       return res.status(500).json({ message: 'Error al registrar venta' });
@@ -71,7 +71,7 @@ router.post('/registrar-venta', (req, res) => {
     const sqlDetalle = 'INSERT INTO venta_detalle (venta_id, producto_id, cantidad, precio_unitario) VALUES ?';
     const detalles = productos.map(p => [ventaId, p.id, p.cantidad, p.precio_unitario]);
 
-    connection.query(sqlDetalle, [detalles], (err2) => {
+    pool.query(sqlDetalle, [detalles], (err2) => {
       if (err2) {
         console.error('Error al registrar detalle de venta:', err2);
         return res.status(500).json({ message: 'Error en detalle de venta' });

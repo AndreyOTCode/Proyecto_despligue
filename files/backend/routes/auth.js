@@ -1,7 +1,7 @@
 // routes/auth.js
 const express = require('express');
 const bcrypt = require('bcrypt');
-const {connection} = require('../db'); // Ajusta si el archivo no se llama exactamente db.js
+const { pool} = require('../db'); // Ajusta si el archivo no se llama exactamente db.js
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.post('/registro', (req, res) => {
 
   // Verificar si el correo ya está registrado
   const verificarEmail = 'SELECT id FROM usuarios WHERE email = ?';
-  connection.query(verificarEmail, [email], async (err, results) => {
+  pool.query(verificarEmail, [email], async (err, results) => {
     if (err) {
       console.error('❌ Error al verificar correo:', err);
       return res.status(500).json({ message: 'Error en el servidor' });
@@ -37,7 +37,7 @@ router.post('/registro', (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?)
       `;
 
-      connection.query(
+      pool.query(
         insertarUsuario,
         [nombre, telefono, email, fecha_nacimiento, hash, rol],
         (err, result) => {

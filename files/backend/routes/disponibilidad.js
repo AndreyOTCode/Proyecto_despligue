@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {connection} = require('../db');
+const { pool} = require('../db');
 
 // POST /api/disponibilidad - Registrar disponibilidad
 router.post('/', (req, res) => {
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     VALUES (?, ?, ?, ?)
   `;
 
-  connection.query(sql, [usuario.id, fecha, hora_inicio, hora_fin], (err) => {
+  pool.query(sql, [usuario.id, fecha, hora_inicio, hora_fin], (err) => {
     if (err) {
       console.error('Error guardando disponibilidad:', err);
       return res.status(500).json({ message: 'Error al guardar disponibilidad' });
@@ -45,7 +45,7 @@ const sql = `
   WHERE artista_id = ? 
   ORDER BY fecha, hora_inicio
 `;
-  connection.query(sql, [usuario.id], (err, results) => {
+  pool.query(sql, [usuario.id], (err, results) => {
     if (err) {
       console.error('Error obteniendo disponibilidad:', err);
       return res.status(500).json({ message: 'Error al consultar disponibilidad' });

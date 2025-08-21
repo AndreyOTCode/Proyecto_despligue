@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {connection} = require('../db'); // asegúrate que este es tu pool de conexión
+const { pool} = require('../db'); // asegúrate que este es tu pool de conexión
 
 router.get('/reporte-ventas', (req, res) => {
   const { inicio, fin } = req.query;
@@ -26,7 +26,7 @@ router.get('/reporte-ventas', (req, res) => {
 
   console.log('📥 Ruta /api/reporte-ventas llamada con:', req.query);
 
-  connection.query(sql, params, (error, results) => {
+  pool.query(sql, params, (error, results) => {
     if (error) {
       console.error('Error en reporte de ventas:', error);
       return res.status(500).json({ error: 'Error al obtener reporte de ventas' });

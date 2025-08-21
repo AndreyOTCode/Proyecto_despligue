@@ -1,7 +1,7 @@
 // backend/login.js
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const {connection} = require('../db');
+const { pool} = require('../db');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/', (req, res) => {
   const { email, contrasena } = req.body;
 
-  connection.query(
+  pool.query(
     'SELECT * FROM usuarios WHERE email = ?',
     [email],
     async (err, results) => {

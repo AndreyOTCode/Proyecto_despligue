@@ -1,7 +1,7 @@
 //backend/routes/reservas.js
 const express = require('express');
 const router  = express.Router();
-const { connection } = require('../db');
+const { pool } = require('../db');
 
 /* GET /api/reservas
    - Admin: ve todas
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
     params = [sesion.id || 0, sesion.email || ''];
   }
 
-  connection.query(sql, params, (err, rows) => {
+  pool.query(sql, params, (err, rows) => {
     if (err) {
       console.error('Error al obtener reservas:', err);
       return res.status(500).json({ message: 'Error al obtener reservas' });
@@ -34,7 +34,7 @@ router.delete('/:id', (req, res) => {
   const sesion = req.session.usuario || null;
 
   if (sesion && sesion.rol === 'admin') {
-    connection.query('DELETE FROM reservas WHERE id = ?', [id], (err, result) => {
+    pool.query('DELETE FROM reservas WHERE id = ?', [id], (err, result) => {
       if (err) {
         console.error('Error al eliminar reserva:', err);
         return res.status(500).json({ message: 'Error al eliminar reserva' });
@@ -46,7 +46,7 @@ router.delete('/:id', (req, res) => {
   }
 
   if (sesion && sesion.id) {
-    connection.query('DELETE FROM reservas WHERE id = ? AND usuario_id = ?', [id, sesion.id], (err, result) => {
+    pool.query('DELETE FROM reservas WHERE id = ? AND usuario_id = ?', [id, sesion.id], (err, result) => {
       if (err) {
         console.error('Error al eliminar reserva:', err);
         return res.status(500).json({ message: 'Error al eliminar reserva' });
@@ -82,7 +82,7 @@ router.post('/', (req, res) => {
        fecha, hora, servicio, profesional, observaciones)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-  connection.query(
+  pool.query(
     sql,
     [usuario_id, nombre, email, telefono, fecha_nacimiento,
      fecha, hora, servicio, profesional, observaciones],
@@ -120,7 +120,7 @@ const sql = `
 `;
 
 
-  connection.query(sql, [profesional], (err, rows) => {
+  pool.query(sql, [profesional], (err, rows) => {
     if (err) {
       console.error('Error al obtener reservas del profesional:', err);
       return res.status(500).json({ message: 'Error al obtener reservas del profesional' });
