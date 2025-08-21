@@ -4,18 +4,9 @@ const mysql = require('mysql2');
 
 async function setupDatabase() {
   try {
-    // Conexión temporal en modo promesa
-    const mysqlPromise = require('mysql2/promise');
-    const tempConn = await mysqlPromise.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD
-    });
 
-    await tempConn.query(`CREATE DATABASE IF NOT EXISTS ragnarok_db`);
+    pool.query(`CREATE DATABASE IF NOT EXISTS ragnarok_db`);
     console.log("✅ Base de datos 'ragnarok_db' lista");
-
-    await tempConn.changeUser({ database: 'ragnarok_db' });
 
     const tables = [
       `CREATE TABLE IF NOT EXISTS disponibilidad (
@@ -82,7 +73,7 @@ async function setupDatabase() {
     ];
 
     for (const table of tables) {
-      await tempConn.query(table);
+      pool.query(table);
     }
 
     console.log("✅ Tablas listas en 'ragnarok_db'");
@@ -97,7 +88,7 @@ async function setupDatabase() {
     ];
 
     for (const u of usuarios) {
-      await tempConn.query(`
+      pool.query(`
         INSERT INTO usuarios (nombre, telefono, email, fecha_nacimiento, contrasena, rol, foto, fecha_registro)
         SELECT * FROM (SELECT ? AS nombre, ? AS telefono, ? AS email, ? AS fecha_nacimiento, ? AS contrasena, ? AS rol, ? AS foto, ? AS fecha_registro) AS tmp
         WHERE NOT EXISTS (SELECT 1 FROM usuarios WHERE email = ?) LIMIT 1;
@@ -126,14 +117,14 @@ async function setupDatabase() {
     ];
 
     for (const p of productos) {
-      await tempConn.query(`
+      pool.query(`
         INSERT INTO productos (nombre, descripcion, imagen_url, precio, stock, categoria, fecha_creacion)
         SELECT * FROM (SELECT ? AS nombre, ? AS descripcion, ? AS imagen_url, ? AS precio, ? AS stock, ? AS categoria, ? AS fecha_creacion) AS tmp
         WHERE NOT EXISTS (SELECT 1 FROM productos WHERE nombre = ?) LIMIT 1;
       `, [...p, p[0]]);
     }
 
-    await tempConn.end();
+    pool.end();
   } catch (error) {
     console.error("❌ Error creando base de datos o tablas:", error);
   }
@@ -145,9 +136,6 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  keepAliveInitialDelay: 10000, // 0 by default.
-  enableKeepAlive: true, // false by default.
-
 });
 
 
