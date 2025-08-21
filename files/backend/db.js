@@ -2,11 +2,20 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  multipleStatements: true, // opcional
+}).promise();
+
 async function setupDatabase() {
   try {
 
-    pool.query(`CREATE DATABASE IF NOT EXISTS ragnarok_db`);
+    await pool.query(`CREATE DATABASE IF NOT EXISTS ragnarok_db`);
     console.log("✅ Base de datos 'ragnarok_db' lista");
+
+    await pool.query(`USE ragnarok_db`);
 
     const tables = [
       `CREATE TABLE IF NOT EXISTS disponibilidad (
@@ -73,7 +82,7 @@ async function setupDatabase() {
     ];
 
     for (const table of tables) {
-      pool.query(table);
+      await pool.promise().query(table);
     }
 
     console.log("✅ Tablas listas en 'ragnarok_db'");
@@ -88,7 +97,7 @@ async function setupDatabase() {
     ];
 
     for (const u of usuarios) {
-      pool.query(`
+      await pool.query(`
         INSERT INTO usuarios (nombre, telefono, email, fecha_nacimiento, contrasena, rol, foto, fecha_registro)
         SELECT * FROM (SELECT ? AS nombre, ? AS telefono, ? AS email, ? AS fecha_nacimiento, ? AS contrasena, ? AS rol, ? AS foto, ? AS fecha_registro) AS tmp
         WHERE NOT EXISTS (SELECT 1 FROM usuarios WHERE email = ?) LIMIT 1;
@@ -117,7 +126,7 @@ async function setupDatabase() {
     ];
 
     for (const p of productos) {
-      pool.query(`
+      await pool.query(`
         INSERT INTO productos (nombre, descripcion, imagen_url, precio, stock, categoria, fecha_creacion)
         SELECT * FROM (SELECT ? AS nombre, ? AS descripcion, ? AS imagen_url, ? AS precio, ? AS stock, ? AS categoria, ? AS fecha_creacion) AS tmp
         WHERE NOT EXISTS (SELECT 1 FROM productos WHERE nombre = ?) LIMIT 1;
@@ -129,14 +138,6 @@ async function setupDatabase() {
     console.error("❌ Error creando base de datos o tablas:", error);
   }
 }
-
-// Pool de promesas para consultas con async/await
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
 
 
 module.exports = { pool, setupDatabase };
