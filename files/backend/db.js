@@ -148,13 +148,7 @@ const pool = mysql.createPool({
   keepAliveInitialDelay: 10000, // 0 by default.
   enableKeepAlive: true, // false by default.
 
-}).promise();
-
-pool.connect((err) => {
-  if (err) throw err;
-  console.log('Conectado a la base de datos MySQL');
 });
-
 
 
 module.exports = { pool, setupDatabase };
