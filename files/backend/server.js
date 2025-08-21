@@ -24,12 +24,6 @@ const inventariosRoutes = require('./routes/inventarios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.set("trust proxy", 1);
-
-app.use(express.static(path.join(__dirname, "../frontend")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
-});
 app.use(cors({
   origin: true,
   credentials: true              
