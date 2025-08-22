@@ -6,17 +6,15 @@ const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  password: process.env.DB_NAME,
+  database: process.env.DB_NAME,
   multipleStatements: true, // opcional
 }).promise();
 
 async function setupDatabase() {
   try {
-
-    await pool.query(`CREATE DATABASE IF NOT EXISTS ragnarok_db`);
+    
     console.log("✅ Base de datos 'ragnarok_db' lista");
 
-    await pool.query(`USE ragnarok_db`);
 
     const tables = [
       `CREATE TABLE IF NOT EXISTS disponibilidad (
