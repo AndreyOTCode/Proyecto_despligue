@@ -1,6 +1,6 @@
 // routes/admin.js
 const express = require('express');
-const {pool} = require('../db');
+const { pool } = require('../db');
 const router = express.Router();
 
 // Middleware para verificar si es admin
@@ -12,15 +12,18 @@ function esAdmin(req, res, next) {
 }
 
 // Obtener todos los usuarios
-router.get('/usuarios', esAdmin, (req, res) => {
-  pool.query('SELECT id, nombre, email, rol FROM usuarios', (err, results) => {
-    if (err) return res.status(500).json({ message: 'Error al obtener usuarios' });
+router.get('/usuarios', esAdmin, async (req, res) => {
+  try {
+    const [results] = await pool.query('SELECT id, nombre, email, rol FROM usuarios');
     res.json(results);
-  });
+  } catch (err) {
+    console.error('❌ Error al obtener usuarios:', err);
+    res.status(500).json({ message: 'Error al obtener usuarios' });
+  }
 });
 
 // Editar rol
-router.put('/usuarios/:id/rol', esAdmin, (req, res) => {
+router.put('/usuarios/:id/rol', esAdmin, async (req, res) => {
   const { id } = req.params;
   const { nuevoRol } = req.body;
   const rolesPermitidos = ['admin', 'barbero', 'tatuador', 'cliente'];
@@ -29,15 +32,13 @@ router.put('/usuarios/:id/rol', esAdmin, (req, res) => {
     return res.status(400).json({ message: 'Rol no permitido' });
   }
 
-  pool.query(
-    'UPDATE usuarios SET rol = ? WHERE id = ?',
-    [nuevoRol, id],
-    (err, result) => {
-      if (err) return res.status(500).json({ message: 'Error al actualizar el rol' });
-      res.json({ message: 'Rol actualizado exitosamente' });
-    }
-  );
+  try {
+    await pool.query('UPDATE usuarios SET rol = ? WHERE id = ?', [nuevoRol, id]);
+    res.json({ message: 'Rol actualizado exitosamente' });
+  } catch (err) {
+    console.error('❌ Error al actualizar el rol:', err);
+    res.status(500).json({ message: 'Error al actualizar el rol' });
+  }
 });
 
 module.exports = router;
- 

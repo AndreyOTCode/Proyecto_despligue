@@ -1,9 +1,10 @@
+// routes/disponibilidad.js
 const express = require('express');
 const router = express.Router();
-const { pool} = require('../db');
+const { pool } = require('../db');
 
 // POST /api/disponibilidad - Registrar disponibilidad
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { fecha, hora_inicio, hora_fin } = req.body;
   const usuario = req.session.usuario;
 
@@ -15,44 +16,40 @@ router.post('/', (req, res) => {
     return res.status(400).json({ message: 'Datos inválidos' });
   }
 
-  const sql = `
-    INSERT INTO disponibilidad (artista_id, fecha, hora_inicio, hora_fin)
-    VALUES (?, ?, ?, ?)
-  `;
-
-  pool.query(sql, [usuario.id, fecha, hora_inicio, hora_fin], (err) => {
-    if (err) {
-      console.error('Error guardando disponibilidad:', err);
-      return res.status(500).json({ message: 'Error al guardar disponibilidad' });
-    }
-
+  try {
+    const sql = `
+      INSERT INTO disponibilidad (artista_id, fecha, hora_inicio, hora_fin)
+      VALUES (?, ?, ?, ?)
+    `;
+    await pool.query(sql, [usuario.id, fecha, hora_inicio, hora_fin]);
     res.json({ message: 'Disponibilidad registrada correctamente' });
-  });
+  } catch (err) {
+    console.error('❌ Error guardando disponibilidad:', err);
+    res.status(500).json({ message: 'Error al guardar disponibilidad' });
+  }
 });
 
-
 // GET /api/disponibilidad - Consultar disponibilidad del artista
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const usuario = req.session.usuario;
 
   if (!usuario || (usuario.rol !== 'barbero' && usuario.rol !== 'tatuador')) {
     return res.status(403).json({ message: 'No autorizado' });
   }
 
-const sql = `
-  SELECT fecha, hora_inicio, hora_fin 
-  FROM disponibilidad 
-  WHERE artista_id = ? 
-  ORDER BY fecha, hora_inicio
-`;
-  pool.query(sql, [usuario.id], (err, results) => {
-    if (err) {
-      console.error('Error obteniendo disponibilidad:', err);
-      return res.status(500).json({ message: 'Error al consultar disponibilidad' });
-    }
-
+  try {
+    const sql = `
+      SELECT fecha, hora_inicio, hora_fin 
+      FROM disponibilidad 
+      WHERE artista_id = ? 
+      ORDER BY fecha, hora_inicio
+    `;
+    const [results] = await pool.query(sql, [usuario.id]);
     res.json(results);
-  });
+  } catch (err) {
+    console.error('❌ Error obteniendo disponibilidad:', err);
+    res.status(500).json({ message: 'Error al consultar disponibilidad' });
+  }
 });
 
 module.exports = router;

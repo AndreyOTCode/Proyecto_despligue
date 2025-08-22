@@ -1,12 +1,12 @@
-//backend/routes/reservas.js
+// backend/routes/reservas.js
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const { pool } = require('../db');
 
 /* GET /api/reservas
    - Admin: ve todas
-   - Usuario: ve sólo las suyas (por usuario_id o por email de la sesión) */
-router.get('/', (req, res) => {
+   - Usuario: ve sólo las suyas */
+router.get('/', async (req, res) => {
   const sesion = req.session.usuario || null;
 
   let sql = 'SELECT * FROM reservas';
@@ -17,50 +17,49 @@ router.get('/', (req, res) => {
     params = [sesion.id || 0, sesion.email || ''];
   }
 
-  pool.query(sql, params, (err, rows) => {
-    if (err) {
-      console.error('Error al obtener reservas:', err);
-      return res.status(500).json({ message: 'Error al obtener reservas' });
-    }
+  try {
+    const [rows] = await pool.query(sql, params);
     res.json(rows);
-  });
+  } catch (err) {
+    console.error('❌ Error al obtener reservas:', err);
+    res.status(500).json({ message: 'Error al obtener reservas' });
+  }
 });
 
-/* DELETE /api/reservas/:id
-   - Admin: puede borrar cualquiera
-   - Usuario: sólo borra citas suyas (por usuario_id) */
-router.delete('/:id', (req, res) => {
+/* DELETE /api/reservas/:id */
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const sesion = req.session.usuario || null;
 
-  if (sesion && sesion.rol === 'admin') {
-    pool.query('DELETE FROM reservas WHERE id = ?', [id], (err, result) => {
-      if (err) {
-        console.error('Error al eliminar reserva:', err);
-        return res.status(500).json({ message: 'Error al eliminar reserva' });
+  try {
+    if (sesion && sesion.rol === 'admin') {
+      const [result] = await pool.query('DELETE FROM reservas WHERE id = ?', [id]);
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'Reserva no encontrada' });
       }
-      if (result.affectedRows === 0) return res.status(404).json({ message: 'Reserva no encontrada' });
-      res.json({ message: 'Reserva eliminada' });
-    });
-    return;
-  }
+      return res.json({ message: 'Reserva eliminada' });
+    }
 
-  if (sesion && sesion.id) {
-    pool.query('DELETE FROM reservas WHERE id = ? AND usuario_id = ?', [id, sesion.id], (err, result) => {
-      if (err) {
-        console.error('Error al eliminar reserva:', err);
-        return res.status(500).json({ message: 'Error al eliminar reserva' });
+    if (sesion && sesion.id) {
+      const [result] = await pool.query(
+        'DELETE FROM reservas WHERE id = ? AND usuario_id = ?',
+        [id, sesion.id]
+      );
+      if (result.affectedRows === 0) {
+        return res.status(403).json({ message: 'No autorizado o reserva no encontrada' });
       }
-      if (result.affectedRows === 0) return res.status(403).json({ message: 'No autorizado o reserva no encontrada' });
-      res.json({ message: 'Reserva eliminada' });
-    });
-  } else {
+      return res.json({ message: 'Reserva eliminada' });
+    }
+
     res.status(401).json({ message: 'No autenticado' });
+  } catch (err) {
+    console.error('❌ Error al eliminar reserva:', err);
+    res.status(500).json({ message: 'Error al eliminar reserva' });
   }
 });
 
-/* POST (tu ruta existente, no la toco) */
-router.post('/', (req, res) => {
+/* POST /api/reservas */
+router.post('/', async (req, res) => {
   const sesion = req.session.usuario || {};
   const {
     usuario_id      = sesion.id      || null,
@@ -76,58 +75,52 @@ router.post('/', (req, res) => {
     return res.status(400).json({ message: 'Faltan campos obligatorios' });
   }
 
-  const sql = `
+  try {
+    const sql = `
       INSERT INTO reservas
       (usuario_id, nombre, email, telefono, fecha_nacimiento,
        fecha, hora, servicio, profesional, observaciones)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
-  pool.query(
-    sql,
-    [usuario_id, nombre, email, telefono, fecha_nacimiento,
-     fecha, hora, servicio, profesional, observaciones],
-    err => {
-      if (err) {
-        console.error('Error al guardar la reserva:', err);
-        return res.status(500).json({ message: 'Error al guardar la reserva' });
-      }
-      res.json({ message: 'Reserva registrada correctamente' });
-    }
-  );
+    await pool.query(sql, [
+      usuario_id, nombre, email, telefono, fecha_nacimiento,
+      fecha, hora, servicio, profesional, observaciones
+    ]);
+
+    res.json({ message: 'Reserva registrada correctamente' });
+  } catch (err) {
+    console.error('❌ Error al guardar la reserva:', err);
+    res.status(500).json({ message: 'Error al guardar la reserva' });
+  }
 });
 
-// GET /api/reservas/profesional
-// - barbero/tatuador: ve SOLO sus citas (coincidencia por "profesional")
-// - admin: puede filtrar pasando ?profesional=Nombre
-router.get('/profesional', (req, res) => {
+/* GET /api/reservas/profesional */
+router.get('/profesional', async (req, res) => {
   const sesion = req.session.usuario || null;
   if (!sesion) return res.status(401).json({ message: 'No autenticado' });
 
   const esStaff = ['barbero', 'tatuador', 'admin'].includes(sesion.rol);
   if (!esStaff) return res.status(403).json({ message: 'No autorizado' });
 
-  // Si no viene query, usamos el nombre en sesión (barbero/tatuador)
   const profesional = (req.query.profesional || sesion.nombre || '').trim();
   if (!profesional) {
     return res.status(400).json({ message: 'No se pudo determinar el profesional' });
   }
 
-const sql = `
-  SELECT id, fecha, hora, servicio, profesional, observaciones, nombre
-  FROM reservas
-  WHERE LOWER(TRIM(profesional)) = LOWER(TRIM(?))
-  ORDER BY fecha, hora
-`;
-
-
-  pool.query(sql, [profesional], (err, rows) => {
-    if (err) {
-      console.error('Error al obtener reservas del profesional:', err);
-      return res.status(500).json({ message: 'Error al obtener reservas del profesional' });
-    }
+  try {
+    const sql = `
+      SELECT id, fecha, hora, servicio, profesional, observaciones, nombre
+      FROM reservas
+      WHERE LOWER(TRIM(profesional)) = LOWER(TRIM(?))
+      ORDER BY fecha, hora
+    `;
+    const [rows] = await pool.query(sql, [profesional]);
     res.json(rows);
-  });
+  } catch (err) {
+    console.error('❌ Error al obtener reservas del profesional:', err);
+    res.status(500).json({ message: 'Error al obtener reservas del profesional' });
+  }
 });
-
 
 module.exports = router;

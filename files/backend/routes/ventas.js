@@ -1,8 +1,10 @@
+// backend/routes/ventas.js
 const express = require('express');
 const router = express.Router();
-const { pool} = require('../db'); // asegúrate que este es tu pool de conexión
+const { pool } = require('../db'); // conexión con promesas
 
-router.get('/reporte-ventas', (req, res) => {
+// 📊 Reporte de ventas
+router.get('/reporte-ventas', async (req, res) => {
   const { inicio, fin } = req.query;
 
   let sql = `
@@ -24,17 +26,14 @@ router.get('/reporte-ventas', (req, res) => {
 
   sql += ` ORDER BY v.fecha DESC`;
 
-  console.log('📥 Ruta /api/reporte-ventas llamada con:', req.query);
-
-  pool.query(sql, params, (error, results) => {
-    if (error) {
-      console.error('Error en reporte de ventas:', error);
-      return res.status(500).json({ error: 'Error al obtener reporte de ventas' });
-    }
-
-    // ✅ Aquí 'results' ya es un array
+  try {
+    console.log('📥 Ruta /api/reporte-ventas llamada con:', req.query);
+    const [results] = await pool.query(sql, params); // 🔹 Usamos promesas
     return res.json(results);
-  });
+  } catch (error) {
+    console.error('Error en reporte de ventas:', error);
+    return res.status(500).json({ error: 'Error al obtener reporte de ventas' });
+  }
 });
 
 module.exports = router;
