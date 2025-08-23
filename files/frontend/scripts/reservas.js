@@ -94,9 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* -------- Hacer Reservas -------- */
   let usuario = null;
 
-  fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
-    credentials: 'include'
-  })
+  fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {headers: { 'x-session-id': sessionId }})
     .then(res => (res.ok ? res.json() : null))
     .then(data => {
       if (data?.usuario) {

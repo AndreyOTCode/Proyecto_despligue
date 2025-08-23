@@ -9,12 +9,21 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const res = await fetch('https://proyecto-despligue.onrender.com/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
       body: JSON.stringify({ email, contrasena })
     });
 
     const data = await res.json();
 
+    if (res.ok) {
+  localStorage.setItem('sessionId', data.sessionId);
+  window.sessionId = data.sessionId;
+
+   // Guardar también el rol
+        localStorage.setItem('rol', data.rol);
+
+        alert('Inicio de sesión exitoso ✅');
+
+}
     // Mostrar toast
     const toastMessage = document.getElementById('toastMessage');
     toastMessage.textContent = data.message;

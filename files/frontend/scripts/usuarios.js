@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function cargarUsuarios() {
     try {
-      const res = await fetch(BASE_URL, { credentials: 'include' });
+      const res = await fetch(BASE_URL, {headers: { 'x-session-id': sessionId }});
       if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
 
       const texto = await res.text();

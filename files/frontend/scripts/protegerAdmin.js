@@ -1,8 +1,7 @@
+//frontend/scripts/protegerAdmin.js
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const res = await fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
-      credentials: 'include'
-    });
+    const res = await fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {headers: { 'x-session-id': sessionId }});
 
     if (!res.ok) throw new Error('No autorizado');
 

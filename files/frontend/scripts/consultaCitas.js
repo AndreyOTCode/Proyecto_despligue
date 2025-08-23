@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function cargarCitas() {
     try {
-      const res = await fetch(BASE_URL, { credentials: 'include' });
+      const res = await fetch(BASE_URL, {headers: { 'x-session-id': sessionId }});
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const texto = await res.text();
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const res = await fetch(`https://proyecto-despligue.onrender.com/api/reservas/${id}`, {
           method: 'DELETE',
-          credentials: 'include'
+          headers: { 'x-session-id': sessionId }
         });
         if (res.ok) {
           cargarCitas();

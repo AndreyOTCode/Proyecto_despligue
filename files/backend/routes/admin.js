@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Middleware para verificar si es admin
 function esAdmin(req, res, next) {
-  if (!req.session?.usuario || req.session.usuario.rol !== 'admin') {
+  if (!req.usuario || req.usuario.rol !== 'admin') {
     return res.status(403).json({ message: 'No autorizado' });
   }
   next();

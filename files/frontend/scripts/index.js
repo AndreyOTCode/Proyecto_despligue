@@ -3,10 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const paginaActual = location.pathname;
 
   try {
-    const res = await fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
-      method: 'GET',
-      credentials: 'include'
-    });
+    const res = await fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion',{headers: { 'x-session-id': sessionId }});
 
     if (res.status === 401 || res.status === 403) {
       // Usuario no logueado

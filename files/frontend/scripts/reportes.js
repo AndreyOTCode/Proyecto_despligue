@@ -1,3 +1,4 @@
+//frintend/scripts/resportes.js
 document.addEventListener('DOMContentLoaded', () => {
   const tabla = document.getElementById('tabla-ventas');
   const btnFiltrar = document.getElementById('btn-filtrar');
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       url += `?inicio=${inicio}&fin=${fin}`;
     }
 
-    fetch(url, { credentials: 'include' })
+    fetch(url, {headers: { 'x-session-id': sessionId }})
       .then(res => res.json())
       .then(data => {
         if (!Array.isArray(data) || data.length === 0) {

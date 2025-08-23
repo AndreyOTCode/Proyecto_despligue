@@ -1,3 +1,4 @@
+//frontend/carrito.js
 let cart = [];
 let finalizarBtn = null;
 
@@ -93,9 +94,8 @@ function removeFromCart(index) {
 
 // Verifica si el usuario está logueado antes de finalizar compra
 function verificarSesionAntesDeComprar() {
-  fetch('http://localhost:3000/api/usuario-sesion', {
-    credentials: 'include'
-  })
+  fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion',{headers: { 'x-session-id': sessionId }})
+
     .then(res => {
       if (!res.ok) throw new Error('No autenticado');
       return res.json();
@@ -119,10 +119,9 @@ function mostrarMensajeCompraExitosa() {
     precio_unitario: item.price
   }));
 
-  fetch('http://localhost:3000/api/descontar-stock', {
+  fetch('https://proyecto-despligue.onrender.com/api/descontar-stock', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
+    headers: { 'Content-Type': 'application/json', 'x-session-id': sessionId },
     body: JSON.stringify({ productos: productosAEnviar })
   })
     .then(res => res.json())
@@ -131,15 +130,14 @@ function mostrarMensajeCompraExitosa() {
         alert('Algunos productos no tienen stock suficiente.');
       } else {
         // Obtener usuario_id para registrar venta
-        fetch('http://localhost:3000/api/usuario-sesion', {
-          credentials: 'include'
+        fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
+          headers: { 'x-session-id': sessionId }
         })
           .then(res => res.json())
           .then(userData => {
-            return fetch('http://localhost:3000/api/registrar-venta', {
+            return fetch('https://proyecto-despligue.onrender.com/api/registrar-venta', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              credentials: 'include',
+              headers: { 'Content-Type': 'application/json', 'x-session-id': sessionId },
               body: JSON.stringify({
                 usuario_id: userData.usuario.id,
                 productos: productosAEnviar

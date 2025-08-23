@@ -7,7 +7,7 @@ const { pool } = require('../db');
    - Admin: ve todas
    - Usuario: ve sólo las suyas */
 router.get('/', async (req, res) => {
-  const sesion = req.session.usuario || null;
+  const sesion = req.usuario || null;
 
   let sql = 'SELECT * FROM reservas';
   let params = [];
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 /* DELETE /api/reservas/:id */
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  const sesion = req.session.usuario || null;
+  const sesion = req.usuario || null;
 
   try {
     if (sesion && sesion.rol === 'admin') {
@@ -60,7 +60,7 @@ router.delete('/:id', async (req, res) => {
 
 /* POST /api/reservas */
 router.post('/', async (req, res) => {
-  const sesion = req.session.usuario || {};
+  const sesion = req.usuario || {};
   const {
     usuario_id      = sesion.id      || null,
     nombre          = sesion.nombre  || '',
@@ -97,7 +97,7 @@ router.post('/', async (req, res) => {
 
 /* GET /api/reservas/profesional */
 router.get('/profesional', async (req, res) => {
-  const sesion = req.session.usuario || null;
+  const sesion = req.usuario || null;
   if (!sesion) return res.status(401).json({ message: 'No autenticado' });
 
   const esStaff = ['barbero', 'tatuador', 'admin'].includes(sesion.rol);

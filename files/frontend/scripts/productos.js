@@ -1,6 +1,5 @@
-fetch('https://proyecto-despligue.onrender.com/api/productos', {
-  credentials: 'include'
-})
+//frontend/scripts/productos.js
+fetch('https://proyecto-despligue.onrender.com/api/productos', {headers: { 'x-session-id': sessionId }})
   .then(res => res.json())
   .then(productos => {
     const contenedor = document.getElementById('productos-container');

@@ -1,4 +1,4 @@
-//frontend/scripts/innventario.js
+//frontend/scripts/inventario.js
 
 document.addEventListener('DOMContentLoaded', () => {
 const BASE_URL = 'https://proyecto-despligue.onrender.com/api/inventarios';
@@ -11,7 +11,7 @@ const BASE_URL = 'https://proyecto-despligue.onrender.com/api/inventarios';
 
   async function cargarProductos() {
     try {
-      const res = await fetch(BASE_URL, { credentials: 'include' });
+      const res = await fetch(BASE_URL, {headers: { 'x-session-id': sessionId }});
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const productos = await res.json();
 
@@ -57,8 +57,7 @@ const BASE_URL = 'https://proyecto-despligue.onrender.com/api/inventarios';
 
     const res = await fetch(url, {
       method: metodo,
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
+      headers: { 'Content-Type': 'application/json', 'x-session-id': sessionId },
       body: JSON.stringify(producto)
     });
 
@@ -85,7 +84,7 @@ const BASE_URL = 'https://proyecto-despligue.onrender.com/api/inventarios';
 
   window.eliminarProducto = async (id) => {
     if (confirm('¿Eliminar producto?')) {
-      const res = await fetch(`${BASE_URL}/${id}`, { method: 'DELETE', credentials: 'include' });
+      const res = await fetch(`${BASE_URL}/${id}`, { method: 'DELETE', headers: { 'x-session-id': sessionId } });
       if (res.ok) cargarProductos();
       else alert('Error al eliminar producto');
     }

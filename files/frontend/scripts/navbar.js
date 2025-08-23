@@ -8,10 +8,7 @@ fetch('navbar.html')
     const logoutButton = document.getElementById('logout');
 
     // Verifica si hay sesión activa
-    fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion', {
-      method: 'GET',
-      credentials: 'include'
-    })
+    fetch('https://proyecto-despligue.onrender.com/api/usuario-sesion',{headers: { 'x-session-id': sessionId }})
     .then(res => {
       if (res.ok) {
         if (logoutButton) logoutButton.style.display = 'block';
@@ -25,10 +22,11 @@ fetch('navbar.html')
       logoutButton.addEventListener('click', () => {
         fetch('https://proyecto-despligue.onrender.com/api/logout', {
           method: 'POST',
-          credentials: 'include'
+          headers: { 'x-session-id': sessionId }
         })
         .then(res => {
-          if (res.ok) {
+         if (res.ok) {
+            localStorage.removeItem('sessionId');
             window.location.href = 'login.html';
           }
         });
