@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (confirm('¿Estás seguro de eliminar este usuario?')) {
       const res = await fetch(`${BASE_URL}/${id}`, {
         method: 'DELETE',
-        credentials: 'include'
+        headers: { 'x-session-id': window.sessionId },
       });
       if (res.ok) cargarUsuarios();
       else alert('Error al eliminar el usuario');
